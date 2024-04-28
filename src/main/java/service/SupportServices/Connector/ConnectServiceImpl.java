@@ -1,9 +1,11 @@
 package service.SupportServices.Connector;
 
+import at.jku.isse.designspace.core.foundation.WorkspaceListener;
 import at.jku.isse.designspace.core.model.Folder;
 import at.jku.isse.designspace.core.model.Tool;
 import at.jku.isse.designspace.core.model.User;
 import at.jku.isse.designspace.core.model.Workspace;
+import at.jku.isse.designspace.core.operations.WorkspaceOperation;
 import at.jku.isse.designspace.sdk.Connect;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,9 @@
 package service;
 
+import at.jku.isse.designspace.core.foundation.WorkspaceListener;
 import at.jku.isse.designspace.core.model.*;
+import at.jku.isse.designspace.core.operations.WorkspaceOperation;
+import at.jku.isse.designspace.core.operations.workspace.InformWorkspaceChanges;
 import at.jku.isse.designspace.sdk.Connect;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
