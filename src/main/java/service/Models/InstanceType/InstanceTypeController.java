@@ -1,22 +1,16 @@
-package service.Models.InstanceType.InstanceTypeController;
+package service.Models.InstanceType;
 
-import at.jku.isse.designspace.core.model.Instance;
 import at.jku.isse.designspace.core.model.InstanceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.Models.DTOs.InstanceDTO;
 import service.Models.DTOs.InstanceTypeDTO;
-import service.Models.Instance.InstanceController.Requests.CreateInstanceRequest;
-import service.Models.InstanceType.InstanceTypeController.Requests.CreateInstanceTypeRequest;
-import service.Models.InstanceType.InstanceTypeService;
+import service.Models.InstanceType.Requests.CreateInstanceTypeRequest;
 import service.SupportServices.ExceptionHandler.CustomStatus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")

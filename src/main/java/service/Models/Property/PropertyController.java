@@ -1,16 +1,13 @@
-package service.Models.Property.PropertyController;
+package service.Models.Property;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.Models.DTOs.PropertyDTO;
-import service.Models.Property.PropertyController.Requests.CreatePropertyRequest;
-import service.Models.Property.PropertyController.Requests.SetPropertyRequest;
-import service.Models.Property.PropertyService;
+import service.Models.Property.Requests.SetPropertyRequest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")

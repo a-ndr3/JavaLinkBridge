@@ -1,14 +1,12 @@
-package service.Models.Instance.InstanceController;
+package service.Models.Instance;
 
 import at.jku.isse.designspace.core.model.Instance;
-import at.jku.isse.designspace.core.model.InstanceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.Models.DTOs.InstanceTypeDTO;
-import service.Models.Instance.InstanceController.Requests.CreateInstanceRequest;
-import service.Models.Instance.InstanceService;
+import service.Models.DTOs.InstanceDTO;
+import service.Models.Instance.Requests.CreateInstanceRequest;
 import service.SupportServices.ExceptionHandler.CustomStatus;
 
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ public class InstanceController {
     }
 
     @PostMapping("/instance/create")
-    public ResponseEntity<InstanceTypeDTO> createInstance(@RequestBody CreateInstanceRequest request) {
+    public ResponseEntity<InstanceDTO> createInstance(@RequestBody CreateInstanceRequest request) {
         Instance result;
 
         try {
@@ -39,9 +37,9 @@ public class InstanceController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        var instanceTypeDTO = new InstanceTypeDTO(result.getId(), result.getName());
+        var inst = new InstanceDTO(result.getId(), result.getName());
 
-        return ResponseEntity.ok(instanceTypeDTO);
+        return ResponseEntity.ok(inst);
     }
 
     @DeleteMapping("/instance/delete/{id}")
@@ -60,38 +58,31 @@ public class InstanceController {
             return ResponseEntity.status(CustomStatus.ErrorWhileDeletingInstance.getStatusCode()).build();
     }
 
-    @GetMapping("/property/getInstances/{typeId}")
-    public ResponseEntity<List<InstanceTypeDTO>> getInstances(@PathVariable Long typeId) {
-        var result = new ArrayList<InstanceTypeDTO>();
+    @GetMapping("/instance/getInstances/{typeId}")
+    public ResponseEntity<List<InstanceDTO>> getInstances(@PathVariable(required = false) Long typeId) {
+        var result = new ArrayList<InstanceDTO>();
         try {
-            var instances = instanceService.getInstances(typeId);
+            if (typeId != null) {
+                var instances = instanceService.getInstances(typeId);
 
-            if (instances == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+                if (instances == null) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+                }
+
+                for (var instance : instances) {
+                    result.add(new InstanceDTO(instance.getId(), instance.getName()));
+                }
             }
+            else{
+                var instances = instanceService.getInstances();
 
-            for (var instance : instances) {
-                result.add(new InstanceTypeDTO(instance.getId(), instance.getName()));
-            }
+                if (instances == null) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+                }
 
-        } catch (Exception e) {
-            return ResponseEntity.status(CustomStatus.ErrorWhileGettingData.getStatusCode()).build();
-        }
-        return ResponseEntity.ok(result);
-    }
-
-    @GetMapping("/instance/getAll")
-    public ResponseEntity<List<InstanceTypeDTO>> getAllInstances() {
-        var result = new ArrayList<InstanceTypeDTO>();
-        try {
-            var instances = instanceService.getInstances();
-
-            if (instances == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-
-            for (var instance : instances) {
-                result.add(new InstanceTypeDTO(instance.getId(), instance.getName()));
+                for (var instance : instances) {
+                    result.add(new InstanceDTO(instance.getId(), instance.getName()));
+                }
             }
 
         } catch (Exception e) {
@@ -101,15 +92,15 @@ public class InstanceController {
     }
 
     @GetMapping("/instance/get/{id}")
-    public ResponseEntity<InstanceTypeDTO> getInstance(@PathVariable Long id) {
+    public ResponseEntity<InstanceDTO> getInstance(@PathVariable Long id) {
         var instance = instanceService.getInstance(id);
 
         if (instance == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        var instanceTypeDTO = new InstanceTypeDTO(instance.getId(), instance.getName());
+        var inst = new InstanceDTO(instance.getId(), instance.getName());
 
-        return ResponseEntity.ok(instanceTypeDTO);
+        return ResponseEntity.ok(inst);
     }
 }

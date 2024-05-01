@@ -1,5 +1,6 @@
 package service.Models.Property;
 
+import at.jku.isse.designspace.core.model.Instance;
 import at.jku.isse.designspace.core.model.Property;
 import at.jku.isse.designspace.core.model.PropertyType;
 import org.springframework.stereotype.Service;
@@ -30,12 +31,12 @@ public class PropertyService {
         if (instance == null)
             return;
 
-        setProperty(propertyId, value);
+        setProperty(instance, propertyId, value);
     }
 
-    private void setProperty(Long propertyId, Object value) {
-        var property = connectService.getConnect().getToolWorkspace().getAccessedProperties().stream()
-                .filter(p -> p.getElement().getId() == propertyId)
+    private void setProperty(Instance inst, Long propertyId, Object value) {
+        var property = inst.getAccessedProperties().stream()
+                .filter(p -> p.getPropertyType().getId() == propertyId)
                 .findFirst()
                 .orElse(null);
 

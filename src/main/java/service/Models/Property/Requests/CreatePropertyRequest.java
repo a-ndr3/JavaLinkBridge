@@ -1,4 +1,4 @@
-package service.Models.Property.PropertyController.Requests;
+package service.Models.Property.Requests;
 
 public record CreatePropertyRequest(Long id, String name) {
 }

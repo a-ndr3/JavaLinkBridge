@@ -1,11 +1,10 @@
-package service.Models.PropertyType.PropertyTypeController;
+package service.Models.PropertyType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.Models.DTOs.PropertyTypeDTO;
-import service.Models.PropertyType.PropertyTypeService;
 import service.SupportServices.ExceptionHandler.CustomStatus;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package service.Models.Element.ElementController.Requests;
+package service.Models.Element.Requests;
 
 public record CreateElementRequest(Long id, String name) {
 }
