@@ -1,12 +1,160 @@
 openapi: 3.0.1
 info:
-  title: OpenAPI definition
-  version: v0
+  title: Java Link Bridge API
+  version: v0.1.5.24
 servers:
   - url: http://localhost:8080
-    description: Generated server url
+    description: local server
 paths:
-  /api/instance/{id}:
+  /api/property/{id}/set:
+    post:
+      tags:
+        - property-controller
+      operationId: setProperty
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPropertyRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+  /api/instanceType/create:
+    post:
+      tags:
+        - instance-type-controller
+      operationId: createInstanceType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInstanceTypeRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InstanceTypeDTO'
+  /api/instance/create:
+    post:
+      tags:
+        - instance-controller
+      operationId: createInstance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInstanceRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InstanceTypeDTO'
+  /api/propertyType/getTypes/{instanceTypeId}:
+    get:
+      tags:
+        - property-type-controller
+      operationId: getPropertyTypes
+      parameters:
+        - name: instanceTypeId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyTypeDTO'
+  /api/property/getProperties/{instanceId}:
+    get:
+      tags:
+        - property-controller
+      operationId: getProperties
+      parameters:
+        - name: instanceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyDTO'
+  /api/property/getInstances/{typeId}:
+    get:
+      tags:
+        - instance-controller
+      operationId: getInstances
+      parameters:
+        - name: typeId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstanceTypeDTO'
+  /api/instanceType/getTypes:
+    get:
+      tags:
+        - instance-type-controller
+      operationId: getInstanceTypes
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstanceTypeDTO'
+  /api/instance/getAll:
+    get:
+      tags:
+        - instance-controller
+      operationId: getAllInstances
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstanceTypeDTO'
+  /api/instance/get/{id}:
     get:
       tags:
         - instance-controller
@@ -24,11 +172,12 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/Instance'
-    put:
+                $ref: '#/components/schemas/InstanceTypeDTO'
+  /api/instanceType/delete/{id}:
+    delete:
       tags:
-        - instance-controller
-      operationId: updateInstance
+        - instance-type-controller
+      operationId: deleteInstanceType
       parameters:
         - name: id
           in: path
@@ -36,19 +185,10 @@ paths:
           schema:
             type: integer
             format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateInstanceRequest'
-        required: true
       responses:
         '200':
           description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Instance'
+  /api/instance/delete/{id}:
     delete:
       tags:
         - instance-controller
@@ -63,537 +203,53 @@ paths:
       responses:
         '200':
           description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Instance'
-  /api/serverCommands:
-    post:
-      tags:
-        - server-commands-controller
-      operationId: executeCommand
-      parameters:
-        - name: command
-          in: query
-          required: true
-          schema:
-            type: string
-            enum:
-              - Commit
-              - Conclude
-              - Update
-      responses:
-        '200':
-          description: OK
-  /api/instance:
-    post:
-      tags:
-        - instance-controller
-      operationId: createInstance
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateInstanceRequest'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Instance'
-  /api/instance/set/{id}:
-    post:
-      tags:
-        - instance-controller
-      operationId: set
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddRequest'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Instance'
-  /api/instance/add/{id}:
-    post:
-      tags:
-        - instance-controller
-      operationId: add
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddRequest'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Instance'
 components:
   schemas:
-    UpdateInstanceRequest:
+    SetPropertyRequest:
       type: object
       properties:
+        propertyId:
+          type: integer
+          format: int64
         data:
-          type: string
-    Change:
-      type: object
-      properties:
-        time:
-          type: integer
-          format: int64
-        timestamp:
-          type: integer
-          format: int64
-        message:
-          type: string
-        externalOperations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ElementOperation'
-    Element:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/Workspace'
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        instanceType:
-          $ref: '#/components/schemas/InstanceType'
-        folder:
-          $ref: '#/components/schemas/Folder'
-        lastOperation:
-          $ref: '#/components/schemas/Operation'
-        creationTime:
-          type: integer
-          format: int64
-        qualifiedName:
-          type: string
-        propertyNames:
-          type: array
-          items:
-            type: string
-        deleted:
-          type: boolean
-        propertyNamesIncludingSuperClasses:
-          type: array
-          items:
-            type: string
-    ElementOperation:
-      type: object
-      properties:
-        time:
-          type: integer
-          format: int64
-        timestamp:
-          type: integer
-          format: int64
-        elementId:
-          type: integer
-          format: int64
-        folderId:
-          type: integer
-          format: int64
-    Folder:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/Workspace'
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        instanceType:
-          $ref: '#/components/schemas/InstanceType'
-        folder:
-          $ref: '#/components/schemas/Folder'
-        accessedProperties:
-          type: array
-          items:
-            $ref: '#/components/schemas/Property'
-        lastOperation:
-          $ref: '#/components/schemas/Operation'
-        creationTime:
-          type: integer
-          format: int64
-        parentFolder:
-          $ref: '#/components/schemas/Folder'
-        elementsAcrossWorkspaces:
-          type: array
-          properties:
-            empty:
-              type: boolean
-          items:
-            type: integer
-            format: int64
-        path:
-          type: string
-        subFolders:
-          type: array
-          items:
-            $ref: '#/components/schemas/Folder'
-        allSubFolders:
-          type: array
-          items:
-            $ref: '#/components/schemas/Folder'
-        qualifiedName:
-          type: string
-        propertyNames:
-          type: array
-          items:
-            type: string
-        deleted:
-          type: boolean
-        propertyNamesIncludingSuperClasses:
-          type: array
-          items:
-            type: string
-    Instance:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/Workspace'
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        instanceType:
-          $ref: '#/components/schemas/InstanceType'
-        folder:
-          $ref: '#/components/schemas/Folder'
-        accessedProperties:
-          type: array
-          items:
-            $ref: '#/components/schemas/Property'
-        lastOperation:
-          $ref: '#/components/schemas/Operation'
-        creationTime:
-          type: integer
-          format: int64
-        qualifiedName:
-          type: string
-        propertyNames:
-          type: array
-          items:
-            type: string
-        deleted:
-          type: boolean
-        propertyNamesIncludingSuperClasses:
-          type: array
-          items:
-            type: string
-    InstanceType:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/Workspace'
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        instanceType:
-          $ref: '#/components/schemas/InstanceType'
-        folder:
-          $ref: '#/components/schemas/Folder'
-        accessedProperties:
-          type: array
-          items:
-            $ref: '#/components/schemas/Property'
-        lastOperation:
-          $ref: '#/components/schemas/Operation'
-        creationTime:
-          type: integer
-          format: int64
-        superType:
-          $ref: '#/components/schemas/InstanceType'
-        subTypes:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceType'
-        instantiationsAcrossWorkspaces:
-          type: array
-          properties:
-            empty:
-              type: boolean
-          items:
-            type: integer
-            format: int64
-        propertyTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyType'
-        instantiationSupplier:
           type: object
-        qualifiedName:
-          type: string
-        container:
-          $ref: '#/components/schemas/InstanceType'
-        contained:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceType'
-        allSuperTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceType'
-        allSubTypes:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceType'
-        allPropertyTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyType'
-        allPropertyTypesIncludingReserved:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyType'
-        propertyTypesIncludingReserved:
-          type: array
-          items:
-            $ref: '#/components/schemas/PropertyType'
-        propertyNames:
-          type: array
-          items:
-            type: string
-        deleted:
-          type: boolean
-        propertyNamesIncludingSuperClasses:
-          type: array
-          items:
-            type: string
-    Operation:
+    CreateInstanceTypeRequest:
       type: object
       properties:
-        time:
+        parentInstanceId:
           type: integer
           format: int64
-        timestamp:
-          type: integer
-          format: int64
-    Property:
-      type: object
-      properties:
-        uniqId:
-          type: string
-          format: uuid
-        element:
-          $ref: '#/components/schemas/Element'
-        propertyType:
-          $ref: '#/components/schemas/PropertyType'
-        isDeleted:
-          type: boolean
-        lastOperation:
-          $ref: '#/components/schemas/Operation'
         name:
           type: string
-        deleted:
-          type: boolean
-    PropertyType:
+    InstanceTypeDTO:
       type: object
       properties:
-        workspace:
-          $ref: '#/components/schemas/Workspace'
         id:
           type: integer
           format: int64
         name:
           type: string
-        instanceType:
-          $ref: '#/components/schemas/InstanceType'
-        folder:
-          $ref: '#/components/schemas/Folder'
-        lastOperation:
-          $ref: '#/components/schemas/Operation'
-        creationTime:
-          type: integer
-          format: int64
-        ownerInstanceType:
-          $ref: '#/components/schemas/InstanceType'
-        cardinality:
-          type: string
-          enum:
-            - SINGLE
-            - SET
-            - LIST
-            - MAP
-        referencedInstanceType:
-          $ref: '#/components/schemas/InstanceType'
-        opposingPropertyType:
-          $ref: '#/components/schemas/PropertyType'
-        primitive:
-          type: boolean
-        qualifiedName:
-          type: string
-        opposing:
-          type: boolean
-        container:
-          type: boolean
-        contained:
-          type: boolean
-        reserved:
-          type: boolean
-        propertyNames:
-          type: array
-          items:
-            type: string
-        deleted:
-          type: boolean
-        propertyNamesIncludingSuperClasses:
-          type: array
-          items:
-            type: string
-    Workspace:
-      type: object
-      properties:
-        workspace:
-          $ref: '#/components/schemas/Workspace'
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        instanceType:
-          $ref: '#/components/schemas/InstanceType'
-        folder:
-          $ref: '#/components/schemas/Folder'
-        accessedProperties:
-          type: array
-          items:
-            $ref: '#/components/schemas/Property'
-        lastOperation:
-          $ref: '#/components/schemas/Operation'
-        creationTime:
-          type: integer
-          format: int64
-        parentWorkspace:
-          $ref: '#/components/schemas/Workspace'
-        childWorkspaces:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/Workspace'
-        isAutoUpdate:
-          type: boolean
-          writeOnly: true
-        isAutoCommit:
-          type: boolean
-          writeOnly: true
-        parentUpdateTimes:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        lastUpdateTime:
-          type: integer
-          format: int64
-        changes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Change'
-        lastChange:
-          $ref: '#/components/schemas/Change'
-        unconcludedExternalElementOperations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ElementOperation'
-        elementOperations:
-          type: array
-          items:
-            $ref: '#/components/schemas/ElementOperation'
-        lastElementOperation:
-          $ref: '#/components/schemas/ElementOperation'
-        workspaceOperations:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkspaceOperation'
-        lastWorkspaceOperation:
-          $ref: '#/components/schemas/WorkspaceOperation'
-        instanceTypes:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceType'
-        autoUpdate:
-          type: boolean
-        autoCommit:
-          type: boolean
-        allChanges:
-          type: array
-          items:
-            $ref: '#/components/schemas/Change'
-        qualifiedName:
-          type: string
-        propertyNames:
-          type: array
-          items:
-            type: string
-        deleted:
-          type: boolean
-        propertyNamesIncludingSuperClasses:
-          type: array
-          items:
-            type: string
-    WorkspaceOperation:
-      type: object
-      properties:
-        time:
-          type: integer
-          format: int64
-        timestamp:
-          type: integer
-          format: int64
-        elementId:
-          type: integer
-          format: int64
-        folderId:
-          type: integer
-          format: int64
     CreateInstanceRequest:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
-        instanceTypeName:
-          type: string
-    AddRequest:
+    PropertyTypeDTO:
       type: object
       properties:
-        propertyType:
+        id:
+          type: integer
+          format: int64
+        name:
           type: string
-        value:
-          $ref: '#/components/schemas/JsonNode'
-    JsonNode:
+    PropertyDTO:
       type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string

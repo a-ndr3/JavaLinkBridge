@@ -28,6 +28,8 @@ public class JLBApp {
                 ApplicationContext context = event.getApplicationContext();
                 ConnectService connectService = context.getBean(ConnectService.class);
 
+                //TODO 30.04: add a list of parameters that we get from c# to init the connect
+
                 Connect.init("Alice");
                 Workspace workspace = LanguageWorkspace.ROOT.getChildWorkspace("STA v1");
 

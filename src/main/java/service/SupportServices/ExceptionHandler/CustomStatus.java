@@ -10,7 +10,8 @@ public enum CustomStatus {
     ErrorWhileCreatingInstance(463),
     ErrorWhileUpdatingInstance(465),
     ErrorWhileDeletingInstance(464),
-    ErrorWhileExecutingServerCommand(466);
+    ErrorWhileExecutingServerCommand(466),
+    ErrorWhileGettingData(467), ErrorWhileDeletingPropertyType(468), ErrorWhileDeletingInstanceType(469);
 
     private final int statusCode;
 

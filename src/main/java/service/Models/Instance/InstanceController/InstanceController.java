@@ -1,15 +1,18 @@
 package service.Models.Instance.InstanceController;
 
 import at.jku.isse.designspace.core.model.Instance;
+import at.jku.isse.designspace.core.model.InstanceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.Models.Instance.InstanceController.Requests.AddRequest;
+import service.Models.DTOs.InstanceTypeDTO;
 import service.Models.Instance.InstanceController.Requests.CreateInstanceRequest;
-import service.Models.Instance.InstanceController.Requests.UpdateInstanceRequest;
 import service.Models.Instance.InstanceService;
 import service.SupportServices.ExceptionHandler.CustomStatus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -22,12 +25,12 @@ public class InstanceController {
         this.instanceService = instanceService;
     }
 
-    @PostMapping("/instance")
-    public ResponseEntity<Instance> createInstance(@RequestBody CreateInstanceRequest request) {
+    @PostMapping("/instance/create")
+    public ResponseEntity<InstanceTypeDTO> createInstance(@RequestBody CreateInstanceRequest request) {
         Instance result;
 
         try {
-            result = instanceService.createInstance(request.name(), request.instanceTypeName());
+            result = instanceService.createInstance(request.id(), request.name());
         } catch (Exception e) {
             return ResponseEntity.status(CustomStatus.ErrorWhileCreatingInstance.getStatusCode()).build();
         }
@@ -36,20 +39,13 @@ public class InstanceController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        return ResponseEntity.ok(result);
+        var instanceTypeDTO = new InstanceTypeDTO(result.getId(), result.getName());
+
+        return ResponseEntity.ok(instanceTypeDTO);
     }
 
-    @PutMapping("/instance/{id}")
-    public ResponseEntity<Instance> updateInstance(@PathVariable Long id, @RequestBody UpdateInstanceRequest request) {
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
-//        Instance result = instanceService.updateInstance(id, request.data);
-//        if (result == null) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-        //return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
-    }
-    @DeleteMapping("/instance/{id}")
-    public ResponseEntity<Instance> deleteInstance(@PathVariable Long id) {
+    @DeleteMapping("/instance/delete/{id}")
+    public ResponseEntity<Void> deleteInstance(@PathVariable Long id) {
         try {
             instanceService.deleteInstance(id);
         } catch (Exception e) {
@@ -59,40 +55,61 @@ public class InstanceController {
         var instance = instanceService.getInstance(id);
 
         if (instance.isDeleted())
-            return ResponseEntity.status(CustomStatus.Success.getStatusCode()).body(instance);
+            return ResponseEntity.status(CustomStatus.Success.getStatusCode()).build();
         else
             return ResponseEntity.status(CustomStatus.ErrorWhileDeletingInstance.getStatusCode()).build();
     }
 
-    @GetMapping("/instance/{id}")
-    public ResponseEntity<Instance> getInstance(@PathVariable Long id) {
+    @GetMapping("/property/getInstances/{typeId}")
+    public ResponseEntity<List<InstanceTypeDTO>> getInstances(@PathVariable Long typeId) {
+        var result = new ArrayList<InstanceTypeDTO>();
+        try {
+            var instances = instanceService.getInstances(typeId);
+
+            if (instances == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+            for (var instance : instances) {
+                result.add(new InstanceTypeDTO(instance.getId(), instance.getName()));
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(CustomStatus.ErrorWhileGettingData.getStatusCode()).build();
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/instance/getAll")
+    public ResponseEntity<List<InstanceTypeDTO>> getAllInstances() {
+        var result = new ArrayList<InstanceTypeDTO>();
+        try {
+            var instances = instanceService.getInstances();
+
+            if (instances == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+            for (var instance : instances) {
+                result.add(new InstanceTypeDTO(instance.getId(), instance.getName()));
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(CustomStatus.ErrorWhileGettingData.getStatusCode()).build();
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/instance/get/{id}")
+    public ResponseEntity<InstanceTypeDTO> getInstance(@PathVariable Long id) {
         var instance = instanceService.getInstance(id);
 
-        if (instance == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
-        return ResponseEntity.ok(instance);
-    }
-
-    @PostMapping("/instance/add/{id}")
-    public ResponseEntity<Instance> add(@PathVariable Long id, @RequestBody AddRequest request) {
-        Instance result = instanceService.add(id, request.getPropertyType(), request.getValue());
-
-        if (result == null) {
+        if (instance == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        return ResponseEntity.ok(result);
-    }
+        var instanceTypeDTO = new InstanceTypeDTO(instance.getId(), instance.getName());
 
-    @PostMapping("/instance/set/{id}")
-    public ResponseEntity<Instance> set(@PathVariable Long id, @RequestBody AddRequest request) {
-        Instance result = instanceService.set(id, request.getPropertyType(), request.getValue());
-
-        if (result == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(instanceTypeDTO);
     }
 }
