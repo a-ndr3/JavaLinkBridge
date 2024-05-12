@@ -18,7 +18,7 @@ public class PropertyTypeService {
     }
 
     public List<PropertyType> getPropertyTypes(Long instanceTypeId) {
-        return connectService.getConnect().getToolWorkspace()
+        return connectService.getConnect().getLanguageWorkspace()
                 .getInstanceType(instanceTypeId).getPropertyTypes().stream().toList();
     }
 }

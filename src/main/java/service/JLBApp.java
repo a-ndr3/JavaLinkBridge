@@ -1,9 +1,7 @@
 package service;
 
-import at.jku.isse.designspace.core.foundation.WorkspaceListener;
 import at.jku.isse.designspace.core.model.*;
-import at.jku.isse.designspace.core.operations.WorkspaceOperation;
-import at.jku.isse.designspace.core.operations.workspace.InformWorkspaceChanges;
+import at.jku.isse.designspace.domains.STA;
 import at.jku.isse.designspace.sdk.Connect;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,11 +28,7 @@ public class JLBApp {
 
                 //TODO 30.04: add a list of parameters that we get from c# to init the connect
 
-                Connect.init("Alice");
-                Workspace workspace = LanguageWorkspace.ROOT.getChildWorkspace("STA v1");
-
-                connectService.connect(User.GET("Alice"), Tool.GET("STA Tool v1"),
-                        workspace, Folder.PROJECTS, true, true, true);
+                connectService.connectTest("STA v1");
 
             } catch (Exception e) {
                 throw new RuntimeException("Error connecting to workspace", e);

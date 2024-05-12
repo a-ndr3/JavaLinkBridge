@@ -1,24 +1,12 @@
 package service.Models.DTOs;
 
-public class InstanceDTO {
-    private Long id;
-
-    private String name;
+public class InstanceDTO extends BaseDTO {
 
     public InstanceDTO(Long id) {
-        this.id = id;
+        super(id);
     }
 
     public InstanceDTO(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
+        super(id,name);
     }
 }

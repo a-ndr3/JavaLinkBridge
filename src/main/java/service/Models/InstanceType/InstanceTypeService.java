@@ -20,7 +20,8 @@ public class InstanceTypeService {
     }
 
     public Set<InstanceType> getInstanceTypes() {
-        return connectService.getConnect().getToolWorkspace().getInstanceTypes().stream().filter(i -> !i.isDeleted()).collect(Collectors.toSet());
+        return connectService.getConnect().getLanguageWorkspace().getInstanceTypes()
+                .stream().filter(i -> !i.isDeleted()).collect(Collectors.toSet());
     }
 
     public InstanceType createInstanceType(Long id, String name) {
@@ -44,6 +45,6 @@ public class InstanceTypeService {
     }
 
     public InstanceType getInstanceType(Long id) {
-        return connectService.getConnect().getToolWorkspace().getInstanceType(id);
+        return connectService.getConnect().getLanguageWorkspace().getInstanceType(id);
     }
 }

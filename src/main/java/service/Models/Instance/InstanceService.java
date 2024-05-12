@@ -1,6 +1,9 @@
 package service.Models.Instance;
 
-import at.jku.isse.designspace.core.model.Instance;
+import at.jku.isse.designspace.core.foundation.WorkspaceListener;
+import at.jku.isse.designspace.core.model.*;
+import at.jku.isse.designspace.core.operations.WorkspaceOperation;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.SupportServices.Connector.ConnectService;
@@ -10,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class InstanceService {
+public class InstanceService{
 
     private final ConnectService connectService;
 
@@ -22,14 +25,14 @@ public class InstanceService {
     public Instance createInstance(Long id, String name) {
         var connect = connectService.getConnect();
 
-        var instanceType = connect.getToolWorkspace().getInstanceType(id);
+        var instanceType = getInstanceType(id);
 
         if (instanceType == null)
             return null;
 
         return Instance.create(connect.getToolWorkspace(), instanceType, name, connect.getFolder());
     }
-
+    
     public void deleteInstance(Long id) {
         var instance = getInstance(id);
 
@@ -44,7 +47,7 @@ public class InstanceService {
     public List<Instance> getInstances(Long instanceTypeId) {
         var connect = connectService.getConnect();
 
-        var instanceType = connect.getToolWorkspace().getInstanceType(instanceTypeId);
+        var instanceType = getInstanceType(instanceTypeId);
 
         if (instanceType == null)
             return new ArrayList<>();
@@ -55,5 +58,9 @@ public class InstanceService {
 
     public Set<Instance> getInstances() {
         return connectService.getConnect().getFolder().getInstances(connectService.getConnect().getToolWorkspace());
+    }
+
+    public InstanceType getInstanceType(Long id){
+        return connectService.getConnect().getLanguageWorkspace().getInstanceType(id);
     }
 }
