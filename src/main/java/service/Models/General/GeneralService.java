@@ -15,7 +15,7 @@ public class GeneralService {
         this.connectService = connectService;
     }
 
-    public List<?> conclude() {
-        return connectService.conclude();
+    public void conclude() {
+        connectService.conclude();
     }
 }

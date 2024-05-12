@@ -1,41 +1,22 @@
 package service.Models.General;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+
+import static org.apache.commons.lang3.reflect.FieldUtils.getAllFields;
 
 public class ChangeTracker<T> {
     private T original;
     private Map<String, Object> originalValues = new HashMap<>();
     private Map<String, Object> currentValues = new HashMap<>();
-    private boolean isNew = false;
 
-    public ChangeTracker(T original, boolean isNew) {
+    public ChangeTracker(T original) {
         this.original = original;
-        this.isNew = isNew;
-        if (isNew) {
-            registerNewObject(original);
-        } else {
-            initializeOriginalValues(original);
-        }
+        initializeOriginalValues(original);
     }
 
-    private void registerNewObject(T object) {
-        Arrays.stream(object.getClass().getDeclaredFields()).forEach(field -> {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(object);
-                originalValues.put(field.getName(), value);
-                currentValues.put(field.getName(), value);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
     private void initializeOriginalValues(T object) {
-        Arrays.stream(object.getClass().getDeclaredFields()).forEach(field -> {
+        Arrays.stream(getAllFields(object.getClass())).forEach(field -> {
             field.setAccessible(true);
             try {
                 originalValues.put(field.getName(), field.get(object));
@@ -50,9 +31,6 @@ public class ChangeTracker<T> {
     }
 
     public Map<String, Object> getChanges() {
-        if (isNew) {
-            return new HashMap<>(currentValues);
-        }
         Map<String, Object> changes = new HashMap<>();
         currentValues.forEach((key, value) -> {
             if (!Objects.equals(value, originalValues.get(key))) {
@@ -64,9 +42,5 @@ public class ChangeTracker<T> {
 
     public boolean hasChanges() {
         return !getChanges().isEmpty();
-    }
-
-    public boolean isNew() {
-        return isNew;
     }
 }

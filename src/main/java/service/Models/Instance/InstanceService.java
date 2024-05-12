@@ -6,6 +6,7 @@ import at.jku.isse.designspace.core.operations.WorkspaceOperation;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import service.Models.General.ChangeTrackerManager;
 import service.SupportServices.Connector.ConnectService;
 
 import java.util.ArrayList;
@@ -30,7 +31,11 @@ public class InstanceService{
         if (instanceType == null)
             return null;
 
-        return Instance.create(connect.getToolWorkspace(), instanceType, name, connect.getFolder());
+        var instance = Instance.create(connect.getToolWorkspace(), instanceType, name, connect.getFolder());
+
+        ChangeTrackerManager.getInstance().track(instance.getId(), instance);
+
+        return instance;
     }
     
     public void deleteInstance(Long id) {

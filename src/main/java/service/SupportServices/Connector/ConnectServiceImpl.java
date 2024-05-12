@@ -5,12 +5,7 @@ import at.jku.isse.designspace.core.model.*;
 import at.jku.isse.designspace.core.operations.WorkspaceOperation;
 import at.jku.isse.designspace.sdk.Connect;
 import org.springframework.stereotype.Service;
-import service.Models.DTOs.BaseDTO;
-import service.Models.DTOs.DTOFactory;
-import service.Models.General.ChangeTracker;
-
-import java.util.ArrayList;
-import java.util.List;
+import service.Models.General.ChangeTrackerManager;
 
 @Service
 public class ConnectServiceImpl implements ConnectService {
@@ -63,48 +58,28 @@ public class ConnectServiceImpl implements ConnectService {
         });
     }
 
-    private List<BaseDTO> generateChangeDTOs(List<ChangeTracker<?>> trackers) {
-        List<BaseDTO> changedDTOs = new ArrayList<>();
-        for (ChangeTracker<?> tracker : trackers) {
-            if (tracker.hasChanges()) {
-                BaseDTO dto = DTOFactory.createDTO(tracker.getClass().getSimpleName(), tracker.getChanges());
-                changedDTOs.add(dto);
-            }
-        }
-        return changedDTOs;
-    }
-
     @Override
-    public List<?> conclude() {
-//        List<ChangeTracker<?>> trackers = new ArrayList<>();
-//
-//        List<BaseDTO> changes = generateChangeDTOs(trackers);
-//
-//        if (!changes.isEmpty()) {
-//
-//        } else {
-//
-//        }
-//
-//        var originalInstance = connect.getToolWorkspace().getUnconcludedExternalElementOperations().get(0);
-//        var instance = connect.getToolWorkspace().getInstance(originalInstance.elementId);
-//        var instanceDTO = new InstanceDTO(instance.getId(), instance.getName());
-//
-//        try {
-//            connect.getToolWorkspace().concludeChange("");
-//        } catch (Exception e) {
-//            return response;
-//        }
-//
-//        var changes = connect.getToolWorkspace().getAllChanges();
-//
-//        for (var change : changes){
-//            var newObj = connect.getToolWorkspace().getInstance(change.externalOperations.get(0).elementId);
-//            var newConv = genConv.getChanges(newObj);
-//            System.out.println(newConv);
-//        }
-//        return response;
-//    }
-        return null;
+    public void conclude() {
+        var tracker = ChangeTrackerManager.getInstance();
+
+        try {
+            connect.getToolWorkspace().concludeChange("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        var changes = connect.getToolWorkspace().getAllChanges();
+
+        changes.forEach(change -> {
+            var op = change.getExternalOperations();
+            op.forEach(operation -> {
+                var element = connect.getToolWorkspace().getElement(operation.elementId);
+                var id = element.getId();
+                if (tracker.compareExistingId(operation.elementId, id)) {
+                    tracker.trackField(operation.elementId, "id", id);
+                    tracker.updateTrackingKey(operation.elementId, id);
+                }
+            });
+        });
     }
 }
