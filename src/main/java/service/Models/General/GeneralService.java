@@ -18,4 +18,8 @@ public class GeneralService {
     public void conclude() {
         connectService.conclude();
     }
+
+    public boolean getInitialConnectUpdatesFromServer() {
+        return connectService.getInitialConnectUpdatesFromServer();
+    }
 }

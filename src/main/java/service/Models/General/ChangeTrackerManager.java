@@ -1,11 +1,9 @@
 package service.Models.General;
 
+import at.jku.isse.designspace.core.model.Instance;
 import service.Models.DTOs.BaseDTO;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ChangeTrackerManager {
@@ -100,5 +98,16 @@ public class ChangeTrackerManager {
 
     public void clear() {
         trackers.clear();
+    }
+
+    public void populateTrackers(Set<Instance> instances) {
+        //populate both trackers with existing instances
+        //create DTO and track it as welld
+        instances.forEach(instance -> {
+            if (!exists(instance.getId())) {
+                track(instance.getId(), instance);
+                addDto(instance.getId(), new BaseDTO(instance.getId(), instance.getName()));
+            }
+        });
     }
 }

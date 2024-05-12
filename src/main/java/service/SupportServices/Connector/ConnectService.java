@@ -9,4 +9,5 @@ public interface ConnectService {
     boolean isConnected();
     Connect connectTest(String languageWsName);
     void conclude();
+    boolean getInitialConnectUpdatesFromServer();
 }
