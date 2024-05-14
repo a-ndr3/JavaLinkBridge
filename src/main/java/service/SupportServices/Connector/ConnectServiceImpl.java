@@ -55,7 +55,8 @@ public class ConnectServiceImpl implements ConnectService {
                     ((ToolWorkspace) workspace).acceptChanges(iwc.changesPayload);
                     ChangeTrackerManager.getInstance().populateTrackers(connect.getFolder().getInstances(connect.getToolWorkspace()));
                 }
-            }});
+            }
+        });
 
         this.languageWorkspace = (LanguageWorkspace) LanguageWorkspace.ROOT.getChildWorkspace("STA v1");
         return connect;
@@ -128,6 +129,9 @@ public class ConnectServiceImpl implements ConnectService {
                 if (tracker.compareExistingId(operation.elementId, id)) {
                     tracker.trackField(operation.elementId, "id", id);
                     tracker.updateTrackingKey(operation.elementId, id);
+                    tracker.trackField(id, "name", element.getName());
+                } else {
+                    tracker.trackField(operation.elementId, "name", element.getName());
                 }
             });
         });

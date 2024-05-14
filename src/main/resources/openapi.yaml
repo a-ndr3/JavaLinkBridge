@@ -173,6 +173,20 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/InstanceDTO'
+  /api/general/getInitialConnectUpdatesFromServer:
+    get:
+      tags:
+        - general-controller
+      operationId: getInitialConnectUpdatesFromServer
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BaseDTO'
   /api/instanceType/delete/{id}:
     delete:
       tags:

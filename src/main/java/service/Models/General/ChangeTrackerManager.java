@@ -10,6 +10,7 @@ public class ChangeTrackerManager {
     private static ChangeTrackerManager instance;
     private static Map<Long, ChangeTracker<Object>> trackers = new ConcurrentHashMap<>();
     private static Map<Long, BaseDTO> trackedDTOs = new ConcurrentHashMap<>();
+    private static Map<Long, Boolean> hasUpdatedSinceLastFetch = new ConcurrentHashMap<>();
 
     private ChangeTrackerManager() {}
 
@@ -42,6 +43,7 @@ public class ChangeTrackerManager {
 
     public void addDto(Long id, BaseDTO dto) {
         trackedDTOs.put(id, dto);
+        hasUpdatedSinceLastFetch.put(id, true);
     }
 
     public void trackField(Long id, String fieldName, Object newValue) {
@@ -54,6 +56,7 @@ public class ChangeTrackerManager {
     public void updateTrackingKey(Long oldId, Long newId) {
         ChangeTracker<Object> tracker = trackers.remove(oldId);
         BaseDTO dto = trackedDTOs.remove(oldId);
+        hasUpdatedSinceLastFetch.put(newId, hasUpdatedSinceLastFetch.remove(oldId));
         if (tracker != null) {
             trackers.put(newId, tracker);
         }
@@ -73,8 +76,13 @@ public class ChangeTrackerManager {
                 applyChangesToDTO(dto, changes);
                 updates.add(dto);
             }
+            hasUpdatedSinceLastFetch.put(id, false);
         });
         return updates;
+    }
+
+    public void markAllAsFetched() {
+        hasUpdatedSinceLastFetch.keySet().forEach(key -> hasUpdatedSinceLastFetch.put(key, false));
     }
 
     private static void applyChangesToDTO(BaseDTO dto, Map<String, Object> changes) {
@@ -102,7 +110,7 @@ public class ChangeTrackerManager {
 
     public void populateTrackers(Set<Instance> instances) {
         //populate both trackers with existing instances
-        //create DTO and track it as welld
+        //create DTO and track it as well
         instances.forEach(instance -> {
             if (!exists(instance.getId())) {
                 track(instance.getId(), instance);

@@ -28,6 +28,7 @@ public class GeneralController {
             return ResponseEntity.status(500).build();
         }
         var results = ChangeTrackerManager.getInstance().getUpdatedDTOs();
+        ChangeTrackerManager.getInstance().markAllAsFetched();
         return ResponseEntity.ok().body(results);
     }
 
@@ -35,7 +36,9 @@ public class GeneralController {
     public ResponseEntity<List<BaseDTO>> getInitialConnectUpdatesFromServer() {
         try {
             if (generalService.getInitialConnectUpdatesFromServer()) {
-                return ResponseEntity.ok().body(ChangeTrackerManager.getInstance().getUpdatedDTOs());
+                var response = ChangeTrackerManager.getInstance().getUpdatedDTOs();
+                ChangeTrackerManager.getInstance().markAllAsFetched();
+                return ResponseEntity.ok().body(response);
             }
         } catch (Exception e) {
             return ResponseEntity.status(500).build();

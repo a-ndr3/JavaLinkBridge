@@ -51,13 +51,10 @@ public class BaseDTO {
 
     public void setProperty(String propertyName, Object value) {
         try {
-            //Arrays.stream(getAllFields(object.getClass())).forEach(field -> {
-            //            field.setAccessible(true);
             Field field = Arrays.stream(getAllFields(this.getClass()))
                     .filter(f -> f.getName().equals(propertyName))
                     .findFirst()
                     .orElseThrow(() -> new NoSuchFieldException("Field not found"));
-           // Field field = this.getClass().getDeclaredField(propertyName);
             field.setAccessible(true);
             field.set(this, value);
         } catch (NoSuchFieldException | IllegalAccessException e) {
