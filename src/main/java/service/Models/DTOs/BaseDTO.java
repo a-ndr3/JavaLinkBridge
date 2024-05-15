@@ -1,5 +1,7 @@
 package service.Models.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import service.Models.General.ChangeTrackerManager;
 
 import java.lang.reflect.Field;
@@ -7,6 +9,19 @@ import java.util.Arrays;
 
 import static org.apache.commons.lang3.reflect.FieldUtils.getAllFields;
 
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = InstanceDTO.class, name = "InstanceDTO"),
+        @JsonSubTypes.Type(value = PropertyDTO.class, name = "PropertyDTO"),
+        @JsonSubTypes.Type(value = PropertyTypeDTO.class, name = "PropertyTypeDTO"),
+        @JsonSubTypes.Type(value = ElementDTO.class, name = "ElementDTO"),
+        @JsonSubTypes.Type(value = InstanceTypeDTO.class, name = "InstanceTypeDTO"),
+        @JsonSubTypes.Type(value = WorkspaceDTO.class, name = "WorkspaceDTO")
+})
 public class BaseDTO {
     private Long id;
     private Long oldId;

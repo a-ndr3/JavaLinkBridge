@@ -1,6 +1,8 @@
 package service.Models.General;
 
 import at.jku.isse.designspace.core.model.Instance;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import service.Models.DTOs.BaseDTO;
 
 import java.util.*;
@@ -78,6 +80,17 @@ public class ChangeTrackerManager {
             }
             hasUpdatedSinceLastFetch.put(id, false);
         });
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        try {
+            String json = objectMapper.writeValueAsString(updates);
+            System.out.println(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return updates;
     }
 

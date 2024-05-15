@@ -76,7 +76,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BaseDTO'
+                  oneOf:
+                    - $ref: '#/components/schemas/BaseDTO'
+                    - $ref: '#/components/schemas/ElementDTO'
+                    - $ref: '#/components/schemas/InstanceDTO'
+                    - $ref: '#/components/schemas/InstanceTypeDTO'
+                    - $ref: '#/components/schemas/PropertyDTO'
+                    - $ref: '#/components/schemas/PropertyTypeDTO'
+                    - $ref: '#/components/schemas/WorkspaceDTO'
   /api/propertyType/getTypes/{instanceTypeId}:
     get:
       tags:
@@ -186,7 +193,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BaseDTO'
+                  oneOf:
+                    - $ref: '#/components/schemas/BaseDTO'
+                    - $ref: '#/components/schemas/ElementDTO'
+                    - $ref: '#/components/schemas/InstanceDTO'
+                    - $ref: '#/components/schemas/InstanceTypeDTO'
+                    - $ref: '#/components/schemas/PropertyDTO'
+                    - $ref: '#/components/schemas/PropertyTypeDTO'
+                    - $ref: '#/components/schemas/WorkspaceDTO'
   /api/instanceType/delete/{id}:
     delete:
       tags:
@@ -237,15 +251,8 @@ components:
           type: string
     InstanceTypeDTO:
       type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        oldId:
-          type: integer
-          format: int64
-        name:
-          type: string
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
     CreateInstanceRequest:
       type: object
       properties:
@@ -256,16 +263,11 @@ components:
           type: string
     InstanceDTO:
       type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        oldId:
-          type: integer
-          format: int64
-        name:
-          type: string
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
     BaseDTO:
+      required:
+        - type
       type: object
       properties:
         id:
@@ -276,25 +278,23 @@ components:
           format: int64
         name:
           type: string
-    PropertyTypeDTO:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        oldId:
-          type: integer
-          format: int64
-        name:
+        type:
           type: string
+      discriminator:
+        propertyName: type
+    ElementDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
     PropertyDTO:
       type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        oldId:
-          type: integer
-          format: int64
-        name:
-          type: string
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
+    PropertyTypeDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
+    WorkspaceDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
