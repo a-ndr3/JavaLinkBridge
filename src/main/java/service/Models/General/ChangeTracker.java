@@ -8,12 +8,26 @@ public class ChangeTracker<T> {
     private T original;
     private Map<String, Object> originalValues = new HashMap<>();
     private Map<String, Object> currentValues = new HashMap<>();
+    private boolean isFetchedForTheFristTime = false;
 
     public ChangeTracker(T original) {
         this.original = original;
         initializeOriginalValues(original);
     }
 
+    public ChangeTracker(T original, boolean isFetchedForTheFristTime) {
+        this.original = original;
+        this.isFetchedForTheFristTime = isFetchedForTheFristTime;
+        initializeOriginalValues(original);
+    }
+
+    public boolean isFetchedForTheFristTime() {
+        return isFetchedForTheFristTime;
+    }
+
+    public void setFetchedForTheFristTime(boolean fetchedForTheFristTime) {
+        isFetchedForTheFristTime = fetchedForTheFristTime;
+    }
 
     private void initializeOriginalValues(T object) {
         Arrays.stream(getAllFields(object.getClass())).forEach(field -> {

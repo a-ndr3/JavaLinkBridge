@@ -4,6 +4,7 @@ import at.jku.isse.designspace.core.model.Instance;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import service.Models.DTOs.BaseDTO;
+import service.Models.DTOs.InstanceDTO;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,7 +15,8 @@ public class ChangeTrackerManager {
     private static Map<Long, BaseDTO> trackedDTOs = new ConcurrentHashMap<>();
     private static Map<Long, Boolean> hasUpdatedSinceLastFetch = new ConcurrentHashMap<>();
 
-    private ChangeTrackerManager() {}
+    private ChangeTrackerManager() {
+    }
 
     public static synchronized ChangeTrackerManager getInstance() {
         if (instance == null) {
@@ -41,6 +43,10 @@ public class ChangeTrackerManager {
 
     public void track(Long id, Object object) {
         trackers.put(id, new ChangeTracker<>(object));
+    }
+
+    public void trackAfterFetch(Long id, Object object) {
+        trackers.put(id, new ChangeTracker<>(object, true));
     }
 
     public void addDto(Long id, BaseDTO dto) {
@@ -73,10 +79,14 @@ public class ChangeTrackerManager {
         List<BaseDTO> updates = new ArrayList<>();
         trackers.forEach((id, tracker) -> {
             BaseDTO dto = trackedDTOs.get(id);
-            if (tracker.hasChanges()) {
-                Map<String, Object> changes = tracker.getChanges();
-                applyChangesToDTO(dto, changes);
-                updates.add(dto);
+            if (hasUpdatedSinceLastFetch.get(id)) {
+                if (tracker.hasChanges()) {
+                    Map<String, Object> changes = tracker.getChanges();
+                    applyChangesToDTO(dto, changes);
+                    updates.add(dto);
+                } else if (tracker.isFetchedForTheFristTime()) {
+                    updates.add(dto);
+                }
             }
             hasUpdatedSinceLastFetch.put(id, false);
         });
@@ -96,22 +106,19 @@ public class ChangeTrackerManager {
 
     public void markAllAsFetched() {
         hasUpdatedSinceLastFetch.keySet().forEach(key -> hasUpdatedSinceLastFetch.put(key, false));
+        trackers.values().stream().filter(ChangeTracker::isFetchedForTheFristTime)
+                .forEach(tracker -> tracker.setFetchedForTheFristTime(false));
+    }
+
+    public boolean hasUpdates() {
+        return (hasUpdatedSinceLastFetch.values().stream().anyMatch(Boolean::booleanValue)
+                || trackers.values().stream().anyMatch(ChangeTracker::isFetchedForTheFristTime));
     }
 
     private static void applyChangesToDTO(BaseDTO dto, Map<String, Object> changes) {
         changes.forEach(dto::setProperty);
     }
 
-    public Map<Long, Map<String, Object>> collectChanges() {
-        Map<Long, Map<String, Object>> allChanges = new HashMap<>();
-        trackers.forEach((id, tracker) -> {
-            Map<String, Object> changes = tracker.getChanges();
-            if (!changes.isEmpty()) {
-                allChanges.put(id, changes);
-            }
-        });
-        return allChanges;
-    }
 
     public void clearTracker(Long id) {
         trackers.remove(id);
@@ -121,13 +128,27 @@ public class ChangeTrackerManager {
         trackers.clear();
     }
 
+    public void addToTracker(Instance instance) {
+        if (!exists(instance.getId())) {
+            track(instance.getId(), instance);
+            addDto(instance.getId(), new InstanceDTO(instance.getId(), instance.getName()));
+        }
+    }
+
+    public void addToTrackerAfterFetch(Instance instance) {
+        if (!exists(instance.getId())) {
+            trackAfterFetch(instance.getId(), instance);
+            addDto(instance.getId(), new InstanceDTO(instance.getId(), instance.getName()));
+        }
+    }
+
     public void populateTrackers(Set<Instance> instances) {
         //populate both trackers with existing instances
         //create DTO and track it as well
         instances.forEach(instance -> {
             if (!exists(instance.getId())) {
                 track(instance.getId(), instance);
-                addDto(instance.getId(), new BaseDTO(instance.getId(), instance.getName()));
+                addDto(instance.getId(), new InstanceDTO(instance.getId(), instance.getName()));
             }
         });
     }

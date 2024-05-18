@@ -7,6 +7,7 @@ import at.jku.isse.designspace.core.operations.PropertyValueOperation;
 import at.jku.isse.designspace.core.operations.WorkspaceOperation;
 import at.jku.isse.designspace.core.operations.element.CreateInstance;
 import at.jku.isse.designspace.core.operations.element.DeleteInstance;
+import at.jku.isse.designspace.core.operations.property.CreateProperty;
 import at.jku.isse.designspace.core.operations.workspace.InformWorkspaceChanges;
 import at.jku.isse.designspace.core.operations.workspace.WorkspaceChangeOperation;
 import at.jku.isse.designspace.sdk.Connect;
@@ -54,6 +55,41 @@ public class ConnectServiceImpl implements ConnectService {
                 if (workspaceOperation instanceof InformWorkspaceChanges iwc) {
                     ((ToolWorkspace) workspace).acceptChanges(iwc.changesPayload);
                     ChangeTrackerManager.getInstance().populateTrackers(connect.getFolder().getInstances(connect.getToolWorkspace()));
+                }
+
+                if (workspaceOperation instanceof WorkspaceChangeOperation wc) {
+                    for (var change : wc.getChanges()) {
+                        for (var operation : change.getExternalOperations()) {
+                            for (ElementOperation internalOperation : operation.getInternalOperations()) {
+                                if (internalOperation instanceof CreateInstance ci) {
+                                    var instance = connect.getToolWorkspace().getInstance(ci.elementId);
+                                    if (ChangeTrackerManager.getInstance().getTrackers().entrySet().stream().noneMatch(entry -> entry.getKey() == ci.elementId))
+                                        ChangeTrackerManager.getInstance().addToTrackerAfterFetch(instance);
+                                } else if (internalOperation instanceof CreateProperty createProperty) {
+                                    var instance = connect.getToolWorkspace().getInstance(createProperty.elementId);
+                                    var inst = ChangeTrackerManager.getInstance().getTrackedDTOs().entrySet().
+                                            stream().filter(entry -> entry.getKey() == instance.getId())
+                                            .findFirst();
+                                    if (inst.isPresent()) {
+                                        ChangeTrackerManager.getInstance().getTrackers().entrySet().removeIf(entry -> entry.getKey() == instance.getId());
+                                        ChangeTrackerManager.getInstance().addToTracker(instance);
+                                    }
+                                } else if (internalOperation instanceof DeleteInstance di) {
+                                    var instance = connect.getToolWorkspace().getInstance(di.elementId);
+                                    ChangeTrackerManager.getInstance().getTrackedDTOs().entrySet().removeIf(entry -> entry.getKey() == instance.getId());
+                                } else if (internalOperation instanceof PropertyValueOperation pvo) {
+                                    var instance = connect.getToolWorkspace().getInstance(pvo.elementId);
+                                    var inst = ChangeTrackerManager.getInstance().getTrackedDTOs().entrySet().
+                                            stream().filter(entry -> entry.getKey() == instance.getId())
+                                            .findFirst();
+                                    if (inst.isPresent()) {
+                                        ChangeTrackerManager.getInstance().getTrackers().entrySet().removeIf(entry -> entry.getKey() == instance.getId());
+                                        ChangeTrackerManager.getInstance().addToTracker(instance);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         });
