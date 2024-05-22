@@ -14,6 +14,7 @@ import at.jku.isse.designspace.sdk.Connect;
 import javafx.application.Platform;
 import org.springframework.stereotype.Service;
 import service.Models.General.ChangeTrackerManager;
+import service.Settings;
 
 @Service
 public class ConnectServiceImpl implements ConnectService {
@@ -37,16 +38,18 @@ public class ConnectServiceImpl implements ConnectService {
     }
 
     @Override
-    public Connect connectTest(String lwsName) {
-        Connect.init("Alice");
+    public Connect connectTest(Settings settings) {
+
+        Connect.init(settings.getName());
         connect = Connect.forProjectTesting(
-                "Alice",
-                "STA Tool v1",
-                ProjectWorkspace.ROOT,
-                Folder.PROJECTS,
-                true,
-                true,
-                true
+                settings.getName(),
+                settings.getTool(),
+                ProjectWorkspace.ALL().stream().filter(workspace -> workspace.getName().equals(settings.getWorkspace()))
+                        .findFirst().get(),
+                Folder.ALL().stream().filter(x -> x.getName().equals(settings.getFolder())).findFirst().get(),
+                settings.getUpdate(),
+                settings.getCommit(),
+                settings.getPrevWork()
         );
 
         connect.subscribeChanges(new WorkspaceListener() {

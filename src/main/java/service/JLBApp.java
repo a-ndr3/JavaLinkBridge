@@ -13,10 +13,32 @@ import service.SupportServices.Connector.ConnectService;
 @SpringBootApplication
 public class JLBApp {
 
+    public static Settings settings;
+
     public static void main(String[] args) {
+        if (args.length < 1) {
+            System.out.println("Usage: java -jar **.jar <ConnectionX> where X is the connection id in the config file <ConfigFilePath>");
+            return;
+        }
+
+        try {
+            settings = ConfigLoader.Instance.load(args[0],args[1]);
+            if (settings == null) {
+                System.out.println("Error loading settings");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading settings: " + e.getMessage());
+            return;
+        }
+
+        try{
         SpringApplication app = new SpringApplication(JLBApp.class);
         app.addListeners(new ApplicationStartup());
-        app.run(args);
+        app.run(args);}
+        catch (Exception e) {
+            throw new RuntimeException("Error starting application", e);
+        }
     }
 
     private static class ApplicationStartup implements ApplicationListener<ApplicationReadyEvent> {
@@ -26,9 +48,7 @@ public class JLBApp {
                 ApplicationContext context = event.getApplicationContext();
                 ConnectService connectService = context.getBean(ConnectService.class);
 
-                //TODO 30.04: add a list of parameters that we get from c# to init the connect
-
-                connectService.connectTest("STA v1");
+                connectService.connectTest(settings);
 
             } catch (Exception e) {
                 throw new RuntimeException("Error connecting to workspace", e);
