@@ -11,7 +11,8 @@ After researching possible solutions, the goal has changed to building a system 
 
 ![image](https://github.com/a-ndr3/JavaLinkBridge/assets/66060105/9b460881-7bab-4b22-a937-aa2a5a7e3b50)
 
-The server/library [DesignSpace](https://www.jku.at/en/institute-of-software-systems-engineering/research/tools/designspace/)
+> [!NOTE]
+> The server/library [DesignSpace](https://www.jku.at/en/institute-of-software-systems-engineering/research/tools/designspace/)
 
 ## Technology Stack
 
