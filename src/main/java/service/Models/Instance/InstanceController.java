@@ -19,6 +19,8 @@ public class InstanceController {
 
     private final InstanceService instanceService;
 
+    private final ChangeTrackerManager changeTrackerManager = ChangeTrackerManager.getInstance();
+
     @Autowired
     public InstanceController(InstanceService instanceService) {
         this.instanceService = instanceService;
@@ -38,7 +40,7 @@ public class InstanceController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        var inst = new InstanceDTO(result.getId(), result.getName());
+        var inst = (InstanceDTO) changeTrackerManager.getTrackedDTOs().get(result.getId());
 
         return ResponseEntity.ok(inst);
     }
@@ -71,10 +73,14 @@ public class InstanceController {
                 }
 
                 for (var instance : instances) {
-                    result.add(new InstanceDTO(instance.getId(), instance.getName()));
+                    if (changeTrackerManager.exists(instance.getId())) {
+                        result.add((InstanceDTO) changeTrackerManager.getTrackedDTOs().get(instance.getId()));
+                    } else {
+                        changeTrackerManager.addToTracker(instance);
+                        result.add((InstanceDTO) changeTrackerManager.getTrackedDTOs().get(instance.getId()));
+                    }
                 }
-            }
-            else{
+            } else {
                 var instances = instanceService.getInstances();
 
                 if (instances == null) {
@@ -82,7 +88,12 @@ public class InstanceController {
                 }
 
                 for (var instance : instances) {
-                    result.add(new InstanceDTO(instance.getId(), instance.getName()));
+                    if (changeTrackerManager.exists(instance.getId())) {
+                        result.add((InstanceDTO) changeTrackerManager.getTrackedDTOs().get(instance.getId()));
+                    } else {
+                        changeTrackerManager.addToTracker(instance);
+                        result.add((InstanceDTO) changeTrackerManager.getTrackedDTOs().get(instance.getId()));
+                    }
                 }
             }
 
@@ -100,9 +111,12 @@ public class InstanceController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        var inst = new InstanceDTO(instance.getId(), instance.getName());
-
-        return ResponseEntity.ok(inst);
+        if (changeTrackerManager.exists(instance.getId())) {
+            return ResponseEntity.ok((InstanceDTO) changeTrackerManager.getTrackedDTOs().get(instance.getId()));
+        } else {
+            changeTrackerManager.addToTracker(instance);
+            return ResponseEntity.ok((InstanceDTO) changeTrackerManager.getTrackedDTOs().get(instance.getId()));
+        }
     }
 
     @PostMapping("/instance/DEBUG_BOB")

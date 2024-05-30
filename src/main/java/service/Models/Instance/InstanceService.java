@@ -34,7 +34,7 @@ public class InstanceService {
 
         var instance = Instance.create(connect.getToolWorkspace(), instanceType, name, connect.getFolder());
 
-        ChangeTrackerManager.getInstance().track(instance.getId(), instance);
+        ChangeTrackerManager.getInstance().addToTracker(instance);
 
         return instance;
     }
@@ -44,6 +44,8 @@ public class InstanceService {
 
         if (instance != null)
             instance.delete();
+
+        ChangeTrackerManager.getInstance().clearTracker(id);
     }
 
     public Instance getInstance(Long id) {
@@ -95,5 +97,6 @@ public class InstanceService {
 
         var inst = Instance.create(conn2.getToolWorkspace(), instanceType, "DEBUG_BOB", conn2.getFolder());
         conn2.getToolWorkspace().concludeChange("DEBUG_BOB");
+        conn2.disconnect();
     }
 }
