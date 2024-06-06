@@ -4,7 +4,6 @@ import at.jku.isse.designspace.core.foundation.WorkspaceListener;
 import at.jku.isse.designspace.core.model.*;
 import at.jku.isse.designspace.core.operations.WorkspaceOperation;
 import at.jku.isse.designspace.sdk.Connect;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.Models.General.ChangeTrackerManager;
@@ -70,33 +69,5 @@ public class InstanceService {
 
     public InstanceType getInstanceType(Long id) {
         return connectService.getConnect().getLanguageWorkspace().getInstanceType(id);
-    }
-
-    public void DEBUG_createInstanceAsBob() {
-        Connect conn2 = Connect.forProjectTesting(
-                "Bob",
-                "STA Tool v1",
-                ProjectWorkspace.ROOT,
-                Folder.PROJECTS,
-                true,
-                true,
-                true
-        );
-
-        conn2.subscribeChanges(new WorkspaceListener() {
-            @Override
-            public void notifyWorkspaceOperation(Workspace workspace, WorkspaceOperation workspaceOperation) {
-
-            }
-        });
-
-        var instanceType = getInstanceType(220L);
-
-        if (instanceType == null)
-            return;
-
-        var inst = Instance.create(conn2.getToolWorkspace(), instanceType, "DEBUG_BOB", conn2.getFolder());
-        conn2.getToolWorkspace().concludeChange("DEBUG_BOB");
-        conn2.disconnect();
     }
 }

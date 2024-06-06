@@ -39,7 +39,10 @@ public class GeneralController {
     public ResponseEntity<List<BaseDTO>> getInitialConnectUpdatesFromServer() {
         try {
             if (generalService.getInitialConnectUpdatesFromServer()) {
-                var response = ChangeTrackerManager.getInstance().getTrackedDTOs().values().stream().filter(x->x.getClass() == InstanceDTO.class).collect(Collectors.toList());
+                var response = ChangeTrackerManager.getInstance()
+                        .getTrackedDTOs().values()
+                        .stream().filter(x->x.getClass() == InstanceDTO.class)
+                        .collect(Collectors.toList()); //todo change to fetch all
                 ChangeTrackerManager.getInstance().markAllAsFetched();
                 return ResponseEntity.ok().body(response);
             }

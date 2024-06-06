@@ -118,15 +118,4 @@ public class InstanceController {
             return ResponseEntity.ok((InstanceDTO) changeTrackerManager.getTrackedDTOs().get(instance.getId()));
         }
     }
-
-    @PostMapping("/instance/DEBUG_BOB")
-    public ResponseEntity<Void> DEBUG_createInstanceAsBob() {
-        try {
-            instanceService.DEBUG_createInstanceAsBob();
-        } catch (Exception e) {
-            return ResponseEntity.status(CustomStatus.ErrorWhileCreatingInstance.getStatusCode()).build();
-        }
-
-        return ResponseEntity.status(CustomStatus.Success.getStatusCode()).build();
-    }
 }
