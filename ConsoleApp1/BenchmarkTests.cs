@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
+using System.Diagnostics;
 
 namespace IO.Swagger
 {
@@ -16,6 +17,10 @@ namespace IO.Swagger
         List<InstanceType> instanceTypes;
 
         InstanceType studentType;
+
+        Stopwatch stopwatch;
+
+        List<double> testRunTimers = new List<double>();
 
         public BenchmarkTests(List<InstanceType> instanceTypes, InstanceType studentType)
         {
@@ -62,6 +67,18 @@ namespace IO.Swagger
             updateManager.conclude();
         }
 
+        public void PerformanceTest()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                startTimer();
+                createInstancesWithConclude(1000);
+                stopTimer();
+                saveTimer();
+            }
+            SaveResultsIntoFile("Performance Test");
+        }
+
         [Benchmark]
         public void ThroughputTest(int instancesAmount)
         {
@@ -98,6 +115,21 @@ namespace IO.Swagger
 
             Console.WriteLine($"Success: {successCount}, Errors: {errorCount}");
         }
+    
+        public void ResponseTimeTest(int instancesAmount)
+        {
+            var totalDuration = 0.0;
+            for (int i = 0; i < instancesAmount; i++)
+            {
+                startTimer();
+                createInstancesWithConclude(1);
+                stopTimer();
+                totalDuration += stopwatch.Elapsed.TotalSeconds;
+            }
+
+            var averageTime = totalDuration / instancesAmount;
+            Console.WriteLine($"Average Response Time: {averageTime} s");          
+        }
 
         [Benchmark]
         public void ErrorRateTest(int instancesAmount, int concludeStep)
@@ -118,34 +150,36 @@ namespace IO.Swagger
             Console.WriteLine($"Success: {successCount}, Errors: {errorCount}");
         }
 
-        [Benchmark]
-        public void PerformanceTest(int instancesAmount)
+        public void startTimer()
         {
-            var startTime = DateTime.Now;
-
-            createInstancesWithConclude(instancesAmount);
-
-            var endTime = DateTime.Now;
-
-            var totalDuration = (endTime - startTime).TotalMilliseconds;
-            var averageTime = totalDuration / instancesAmount;
-
-            Console.WriteLine($"Total Duration: {totalDuration} ms, Average Time: {averageTime} ms");
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
         }
-
-        [Benchmark]
-        public void PerformanceTest(int instancesAmount, int concludeStep)
+        public void cleanTimer()
         {
-            var startTime = DateTime.Now;
-
-            createInstancesWithConclude(instancesAmount, concludeStep);
-
-            var endTime = DateTime.Now;
-
-            var totalDuration = (endTime - startTime).TotalMilliseconds;
-            var averageTime = totalDuration / instancesAmount;
-
-            Console.WriteLine($"Total Duration: {totalDuration} ms, Average Time: {averageTime} ms");
+            testRunTimers.Clear();
+        }
+        public void stopTimer()
+        {
+            stopwatch.Stop();
+        }
+        public void saveTimer()
+        {
+            testRunTimers.Add(stopwatch.Elapsed.TotalSeconds);
+        }
+        public void SaveResultsIntoFile(string testName)
+        {
+            string path = "C:\\Users\\Public\\Documents\\BenchmarkResults.txt";
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(path))
+            {
+                file.WriteLine($"Test run: {testName}");
+                file.WriteLine("_____________________");
+                foreach (var timer in testRunTimers)
+                {
+                    file.WriteLine(timer);
+                }
+            }
+            cleanTimer();
         }
     }
 }

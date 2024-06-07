@@ -16,14 +16,14 @@ namespace IO.Swagger.SharpModel
 
         private GeneralControllerApi generalControllerApi;
 
-        public List<Instance> instances;
+        public Dictionary<long, Instance> instances;
 
         private JsonSerializerSettings jsonSerializerSettings;
 
         static UpdateManager()
         {
             updateManager.generalControllerApi = new GeneralControllerApi();
-            updateManager.instances = new List<Instance>();
+            updateManager.instances = new Dictionary<long, Instance>();
 
             updateManager.jsonSerializerSettings = new JsonSerializerSettings
             {
@@ -155,7 +155,7 @@ namespace IO.Swagger.SharpModel
             {
                 if (dto.Id.HasValue && dto.OldId.HasValue && dto.OldId.Value != dto.Id.Value)
                 {
-                    instances.Remove(instance);
+                    instances.Remove(instance.Id.Value);
                     instance.Id = dto.Id.Value;
                 }
             }
@@ -163,7 +163,7 @@ namespace IO.Swagger.SharpModel
             if (!string.IsNullOrEmpty(dto.Name))
                 instance.Name = dto.Name;
 
-            instances.Add(instance);
+            instances.Add(instance.Id.Value,instance);
 
             if (instance.Id < 0)
             {
@@ -171,16 +171,29 @@ namespace IO.Swagger.SharpModel
             }
         }
 
+        //private Instance FindInstanceByOldOrNewId(long? oldId, long? newId)
+        //{
+        //    Instance instance = null;
+        //    if (oldId.HasValue)
+        //        instance = instances.Find(x => x.Id == oldId.Value);
+
+        //    if (instance == null && newId.HasValue)
+        //        instance = instances.Find(x => x.Id == newId.Value);
+
+        //    return instance;
+        //}
+
         private Instance FindInstanceByOldOrNewId(long? oldId, long? newId)
         {
             Instance instance = null;
-            if (oldId.HasValue)
-                instance = instances.Find(x => x.Id == oldId.Value);
 
-            if (instance == null && newId.HasValue)
-                instance = instances.Find(x => x.Id == newId.Value);
+            if (oldId.HasValue && instances.TryGetValue(oldId.Value, out instance))
+                return instance;
 
-            return instance;
+            if (newId.HasValue && instances.TryGetValue(newId.Value, out instance))
+                return instance;
+
+            return null;
         }
 
     }

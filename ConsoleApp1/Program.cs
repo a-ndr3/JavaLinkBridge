@@ -35,11 +35,8 @@ namespace ConsoleApp1
             Console.WriteLine("8.Disconnect");
             Console.WriteLine("________TESTS_________");
             Console.WriteLine("resp. RESPONSE TIME");
-            Console.WriteLine("load. LOAD");
             Console.WriteLine("perf. PERFORMANCE");
             Console.WriteLine("thr. THROUGHPUT");
-            Console.WriteLine("err. ERROR RATE");
-            Console.WriteLine("res. RESOURCES");
             Console.WriteLine("_________________________");
         }
 
@@ -50,15 +47,21 @@ namespace ConsoleApp1
 
             if (option == "1")
             { 
+                Stopwatch sw = new Stopwatch();
+
+                sw.Start();
                 var updateManager = UpdateManager.Instance;
 
                 updateManager.getInitialServerUpdates();
+                sw.Stop();
+                Console.WriteLine($"Time to get initial updates: {sw.Elapsed.TotalSeconds} seconds");
+                Console.WriteLine($"Number of instances: {updateManager.instances.Count}");
 
                 var instanceTypes = InstanceType.getInstanceTypes();
 
                 var studentType = instanceTypes.Where(x => x.Name == "Student").First();
 
-                BenchmarkTests benchmarkTests = new BenchmarkTests(instanceTypes,studentType);
+                BenchmarkTests benchmarkTests = new BenchmarkTests(instanceTypes, studentType);
 
                 //Console.WriteLine("-----------------Existing instances on Server-----------------");
 
@@ -76,7 +79,8 @@ namespace ConsoleApp1
                     if (optionConnected == "1")
                     {
                         Console.Clear();
-                        updateManager.instances.Add(Instance.create(studentType, "student_" + Guid.NewGuid().ToString()));
+                        var inst = Instance.create(studentType, "student_" + Guid.NewGuid().ToString());
+                        updateManager.instances.Add(inst.Id.Value,inst);
                         Console.WriteLine("Instance created");
 
                     }
@@ -84,7 +88,7 @@ namespace ConsoleApp1
                     {
                         Console.Clear();
                         Console.WriteLine("Instance id:");
-                        updateManager.instances.Where(x => x.Id == long.Parse(Console.ReadLine())).First().delete();
+                        updateManager.instances.Remove(long.Parse(Console.ReadLine()));
                     }
                     else if (optionConnected == "3")
                     {
@@ -106,29 +110,30 @@ namespace ConsoleApp1
                         Console.Clear();
                         foreach (var instance in updateManager.instances)
                         {
-                            Console.WriteLine($"Id:{instance.Id}   Name:{instance.Name}");
+                            Console.WriteLine($"Id:{instance.Key}   Name:{instance.Value.Name}");
                         }
                     }
                     else if (optionConnected == "5")
                     {
                         Console.Clear();
                         Console.WriteLine("Instance id:");
-                        var instance = updateManager.instances.Where(x => x.Id == long.Parse(Console.ReadLine())).First();
-                        var instanceProperties = Property.getProperties(instance);
+                        var id = long.Parse(Console.ReadLine());
+                        var instance = updateManager.instances.Where(x => x.Key == id).First();
+                        var instanceProperties = Property.getProperties(instance.Value);
 
                         instanceProperties.ForEach(x => Console.WriteLine($"Name:{x.Name}   Value:{x.Id}"));
 
                         Console.WriteLine("Property name:");
                         var property = instanceProperties.Where(x => x.Name == Console.ReadLine()).First();
                         Console.WriteLine("Property value:");
-                        Property.set(property, instance, Console.ReadLine());
+                        Property.set(property, instance.Value, Console.ReadLine());
                     }
                     else if (optionConnected == "6")
                     {
                         Console.Clear();
                         Console.WriteLine("Instance id:");
-                        var instance = updateManager.instances.Where(x => x.Id == long.Parse(Console.ReadLine())).First();
-                        var instanceProperties = Property.getProperties(instance);
+                        var instance = updateManager.instances.Where(x => x.Key == long.Parse(Console.ReadLine())).First();
+                        var instanceProperties = Property.getProperties(instance.Value);
 
                         foreach (var pr in instanceProperties)
                         {
@@ -155,74 +160,19 @@ namespace ConsoleApp1
 
                     else if (optionConnected == "resp")
                     {
-
-                    }
-                    else if (optionConnected == "load")
-                    {
-                       
+                        benchmarkTests.ResponseTimeTest(1000);
                     }
                     else if (optionConnected == "perf")
                     {
-                        Console.WriteLine("Performance test started: 1000");
-                        benchmarkTests.PerformanceTest(1000);
+                        Console.WriteLine("Performance test with 20 000 instances, each 1000 = conclude: ");
 
-                        Console.WriteLine("Performance test started: 10000");
-                        benchmarkTests.PerformanceTest(10000);
-
-                        Console.WriteLine("Performance test started: 15000");
-                        benchmarkTests.PerformanceTest(15000);
-
-                        Console.WriteLine("Performance test started: 1000, 100");
-                        benchmarkTests.PerformanceTest(1000, 100);
-
-                        Console.WriteLine("Performance test started: 10000, 100");
-                        benchmarkTests.PerformanceTest(10000, 100);
-
-                        Console.WriteLine("Performance test started: 15000, 100");
-                        benchmarkTests.PerformanceTest(15000, 100);
+                        benchmarkTests.PerformanceTest();
+                        
+                        Console.WriteLine("Test finished. Results are saved!");
                     }
                     else if (optionConnected == "thr")
                     {
-                        benchmarkTests.ThroughputTest(1000);
-                    }
-                    else if (optionConnected == "err")
-                    {
-                        Console.WriteLine("Error rate test started: 1000");
-                        benchmarkTests.ErrorRateTest(1000);
-
-                        Console.WriteLine("Error rate test started: 10000");
-                        benchmarkTests.ErrorRateTest(10000);
-
-                        Console.WriteLine("Error rate test started: 15000");
-                        benchmarkTests.ErrorRateTest(15000);
-
-                        Console.WriteLine("Error rate test started: 1000, 100");
-                        benchmarkTests.ErrorRateTest(1000,100);
-
-                        Console.WriteLine("Error rate test started: 10000, 100");
-                        benchmarkTests.ErrorRateTest(10000, 100);
-                    }
-                    else if (optionConnected == "res")
-                    {
-                        Console.WriteLine("Creating 1000 instances, conclude, update: ");
-                        Stopwatch sw;
-                        sw = new Stopwatch();
-                        try
-                        {                          
-                            sw.Start();
-                            for (int i = 0; i < 1; i++)
-                            {
-                                benchmarkTests.createInstancesWithConclude(1000);
-                            }
-                            sw.Stop();
-                        }
-                        catch (Exception e)
-                        {
-                            sw.Stop();
-                            Console.WriteLine("Time elapsed: " + sw.Elapsed.TotalSeconds);
-                            Console.WriteLine(e.Message);
-                        }
-                        Console.WriteLine("Time elapsed: " + sw.Elapsed.TotalSeconds);
+                       benchmarkTests.ThroughputTest(1000);
                     }
                 }
             }
