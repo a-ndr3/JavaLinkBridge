@@ -10,6 +10,12 @@
 - [Json.NET](https://www.nuget.org/packages/Newtonsoft.Json/) - 7.0.0 or later
 - [JsonSubTypes](https://www.nuget.org/packages/JsonSubTypes/) - 1.2.0 or later
 
+> [!WARNING]
+Versions of RestSharp earlier than 110.2.0 may contain several critical bugs, including excessive socket usage, which could cause errors and prevent the creation of more than 10,000 simultaneous requests. To avoid these issues, it is recommended to upgrade to the stable version 110.2.0 before executing the generated code. Please run RESTCallsUpdater.exe immediately after RestSharp upgrading to fix the method calls.
+
+> [!NOTE]
+RESTCallsUpdater.exe requires two arguments: The first is the path to a text file containing a list of filepaths that need updating, typically including Api, Client, and Model folders. The second argument is the path to RestMethodsUpdater.txt.
+
 <a name="installation"></a>
 ## Installation
 Run the following command to generate the DLL
