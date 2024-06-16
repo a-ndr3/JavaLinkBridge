@@ -1,0 +1,6 @@
+Method.GET to Method.Get
+Method.POST to Method.Post
+Method.PUT to Method.Put
+Method.DELETE to Method.Delete
+this.Configuration.ApiClient.RestClient.BaseUrl.ToString() to this.Configuration.ApiClient.RestClient.Options.BaseUrl.ToString()
+IRestResponse to RestResponse
