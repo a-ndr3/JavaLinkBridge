@@ -8,25 +8,25 @@ public class ChangeTracker<T> {
     private T original;
     private Map<String, Object> originalValues = new HashMap<>();
     private Map<String, Object> currentValues = new HashMap<>();
-    private boolean isFetchedForTheFristTime = false;
+    private boolean isFetchedForTheFirstTime = false;
 
     public ChangeTracker(T original) {
         this.original = original;
         initializeOriginalValues(original);
     }
 
-    public ChangeTracker(T original, boolean isFetchedForTheFristTime) {
+    public ChangeTracker(T original, boolean isFetchedForTheFirstTime) {
         this.original = original;
-        this.isFetchedForTheFristTime = isFetchedForTheFristTime;
+        this.isFetchedForTheFirstTime = isFetchedForTheFirstTime;
         initializeOriginalValues(original);
     }
 
-    public boolean isFetchedForTheFristTime() {
-        return isFetchedForTheFristTime;
+    public boolean isFetchedForTheFirstTime() {
+        return isFetchedForTheFirstTime;
     }
 
-    public void setFetchedForTheFristTime(boolean fetchedForTheFristTime) {
-        isFetchedForTheFristTime = fetchedForTheFristTime;
+    public void setFetchedForTheFirstTime(boolean fetchedForTheFirstTime) {
+        isFetchedForTheFirstTime = fetchedForTheFirstTime;
     }
 
     private void initializeOriginalValues(T object) {
@@ -52,6 +52,10 @@ public class ChangeTracker<T> {
             }
         });
         return changes;
+    }
+
+    public Map<String, Object> getCurrentValues() {
+        return currentValues;
     }
 
     public boolean hasChanges() {

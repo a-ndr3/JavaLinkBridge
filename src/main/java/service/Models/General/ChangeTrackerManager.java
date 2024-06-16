@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import service.Models.DTOs.BaseDTO;
 import service.Models.DTOs.InstanceDTO;
+import service.Models.DTOs.PropertyTypeDTO;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -84,7 +85,7 @@ public class ChangeTrackerManager {
                     Map<String, Object> changes = tracker.getChanges();
                     applyChangesToDTO(dto, changes);
                     updates.add(dto);
-                } else if (tracker.isFetchedForTheFristTime()) {
+                } else if (tracker.isFetchedForTheFirstTime()) {
                     updates.add(dto);
                 }
             }
@@ -104,15 +105,19 @@ public class ChangeTrackerManager {
         return updates;
     }
 
+    public Map<String, Object> getTrackedFields(Long id) {
+        return trackers.get(id).getCurrentValues();
+    }
+
     public void markAllAsFetched() {
         hasUpdatedSinceLastFetch.keySet().forEach(key -> hasUpdatedSinceLastFetch.put(key, false));
-        trackers.values().stream().filter(ChangeTracker::isFetchedForTheFristTime)
-                .forEach(tracker -> tracker.setFetchedForTheFristTime(false));
+        trackers.values().stream().filter(ChangeTracker::isFetchedForTheFirstTime)
+                .forEach(tracker -> tracker.setFetchedForTheFirstTime(false));
     }
 
     public boolean hasUpdates() {
         return (hasUpdatedSinceLastFetch.values().stream().anyMatch(Boolean::booleanValue)
-                || trackers.values().stream().anyMatch(ChangeTracker::isFetchedForTheFristTime));
+                || trackers.values().stream().anyMatch(ChangeTracker::isFetchedForTheFirstTime));
     }
 
     private static void applyChangesToDTO(BaseDTO dto, Map<String, Object> changes) {
@@ -131,15 +136,25 @@ public class ChangeTrackerManager {
     public void addToTracker(Instance instance) {
         if (!exists(instance.getId())) {
             track(instance.getId(), instance);
-            addDto(instance.getId(), new InstanceDTO(instance.getId(), instance.getName()));
+            addDto(instance.getId(), createInstanceDTO(instance));
         }
     }
 
     public void addToTrackerAfterFetch(Instance instance) {
         if (!exists(instance.getId())) {
             trackAfterFetch(instance.getId(), instance);
-            addDto(instance.getId(), new InstanceDTO(instance.getId(), instance.getName()));
+            addDto(instance.getId(), createInstanceDTO(instance));
         }
+    }
+
+    private InstanceDTO createInstanceDTO(Instance instance) {
+        var propTypes = instance.getInstanceType().getPropertyTypes();
+        var dtos = new ArrayList<PropertyTypeDTO>();
+        for (var prop : propTypes) {
+            var dto = new PropertyTypeDTO(prop);
+            dtos.add(dto);
+        }
+        return new InstanceDTO(instance.getId(), instance.getName(), dtos);
     }
 
     public void populateTrackers(Set<Instance> instances) {

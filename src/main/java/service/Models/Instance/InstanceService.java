@@ -6,6 +6,7 @@ import at.jku.isse.designspace.core.operations.WorkspaceOperation;
 import at.jku.isse.designspace.sdk.Connect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import service.Models.General.ChangeTracker;
 import service.Models.General.ChangeTrackerManager;
 import service.SupportServices.Connector.ConnectService;
 
@@ -17,6 +18,8 @@ import java.util.Set;
 public class InstanceService {
 
     private final ConnectService connectService;
+
+    private ChangeTrackerManager changeTrackerManager = ChangeTrackerManager.getInstance();
 
     @Autowired
     public InstanceService(ConnectService connectService) {
@@ -33,7 +36,7 @@ public class InstanceService {
 
         var instance = Instance.create(connect.getToolWorkspace(), instanceType, name, connect.getFolder());
 
-        ChangeTrackerManager.getInstance().addToTracker(instance);
+        changeTrackerManager.addToTracker(instance);
 
         return instance;
     }
@@ -44,7 +47,7 @@ public class InstanceService {
         if (instance != null)
             instance.delete();
 
-        ChangeTrackerManager.getInstance().clearTracker(id);
+        changeTrackerManager.clearTracker(id);
     }
 
     public Instance getInstance(Long id) {
