@@ -171,18 +171,6 @@ namespace IO.Swagger.SharpModel
             }
         }
 
-        //private Instance FindInstanceByOldOrNewId(long? oldId, long? newId)
-        //{
-        //    Instance instance = null;
-        //    if (oldId.HasValue)
-        //        instance = instances.Find(x => x.Id == oldId.Value);
-
-        //    if (instance == null && newId.HasValue)
-        //        instance = instances.Find(x => x.Id == newId.Value);
-
-        //    return instance;
-        //}
-
         private Instance FindInstanceByOldOrNewId(long? oldId, long? newId)
         {
             Instance instance = null;

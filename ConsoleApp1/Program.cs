@@ -47,28 +47,15 @@ namespace ConsoleApp1
 
             if (option == "1")
             { 
-                Stopwatch sw = new Stopwatch();
-
-                sw.Start();
                 var updateManager = UpdateManager.Instance;
 
                 updateManager.getInitialServerUpdates();
-                sw.Stop();
-                Console.WriteLine($"Time to get initial updates: {sw.Elapsed.TotalSeconds} seconds");
-                Console.WriteLine($"Number of instances: {updateManager.instances.Count}");
 
                 var instanceTypes = InstanceType.getInstanceTypes();
 
                 var studentType = instanceTypes.Where(x => x.Name == "Student").First();
 
                 BenchmarkTests benchmarkTests = new BenchmarkTests(instanceTypes, studentType);
-
-                //Console.WriteLine("-----------------Existing instances on Server-----------------");
-
-                //foreach (var instance in updateManager.instances)
-                //{
-                //    Console.WriteLine($"Id:{instance.Id}   Name:{instance.Name}");
-                //}
 
                 while (true)
                 {

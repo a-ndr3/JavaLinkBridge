@@ -4,7 +4,13 @@ VisualStudioVersion = 17.10.34825.169
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IO.Swagger", "src\IO.Swagger\IO.Swagger.csproj", "{8C04BD7C-16AA-4EB0-88C8-B513EEACCAA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{424CED3E-24A1-4AD0-9A46-8316DB19C179}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{424CED3E-24A1-4AD0-9A46-8316DB19C179}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFB802A6-02F0-4583-8E40-6ED8E8A2A933}"
+	ProjectSection(SolutionItems) = preProject
+		RESTCallsUpdater.dll = RESTCallsUpdater.dll
+		RESTCallsUpdater.exe = RESTCallsUpdater.exe
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
