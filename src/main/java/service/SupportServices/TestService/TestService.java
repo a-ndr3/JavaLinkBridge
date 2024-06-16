@@ -45,6 +45,5 @@ public class TestService {
 
         var inst = Instance.create(conn2.getToolWorkspace(), instanceType, "DEBUG_BOB", conn2.getFolder());
         conn2.getToolWorkspace().concludeChange("DEBUG_BOB");
-        conn2.disconnect();
     }
 }

@@ -6,6 +6,7 @@ import service.Models.General.ChangeTrackerManager;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.apache.commons.lang3.reflect.FieldUtils.getAllFields;
 
@@ -66,14 +67,24 @@ public class BaseDTO {
 
     public void setProperty(String propertyName, Object value) {
         try {
-            Field field = Arrays.stream(getAllFields(this.getClass()))
-                    .filter(f -> f.getName().equals(propertyName))
-                    .findFirst()
-                    .orElseThrow(() -> new NoSuchFieldException("Field not found"));
-            field.setAccessible(true);
-            field.set(this, value);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException("Failed to set property", e);
+            Field[] fields = getAllFields(this.getClass());
+            Field targetField = null;
+
+            for (Field field : fields) {
+                if (field.getName().equals(propertyName)) {
+                    targetField = field;
+                    break;
+                }
+            }
+
+            if (targetField != null) {
+                targetField.setAccessible(true);
+                targetField.set(this, value);
+            } else {
+
+            }
+        } catch (Exception e) {
+
         }
     }
 }
