@@ -16,30 +16,6 @@ Versions of RestSharp earlier than 110.2.0 may contain several critical bugs, in
 > [!NOTE]
 RESTCallsUpdater.exe requires two arguments: The first is the path to a text file containing a list of filepaths that need updating, typically including Api, Client, and Model folders. The second argument is the path to RestMethodsUpdater.txt.
 
-<a name="installation"></a>
-## Installation
-Run the following command to generate the DLL
-- [Windows] `build.bat`
-
-Then include the DLL (under the `bin` folder) in the C# project, and use the namespaces:
-```csharp
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-```
-<a name="packaging"></a>
-## Packaging
-
-A `.nuspec` is included with the project. You can follow the Nuget quickstart to [create](https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package#create-the-package) and [publish](https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package#publish-the-package) packages.
-
-This `.nuspec` uses placeholders from the `.csproj`, so build the `.csproj` directly:
-
-```
-nuget pack -Build -OutputDirectory out IO.Swagger.csproj
-```
-
-Then, publish to a [local feed](https://docs.microsoft.com/en-us/nuget/hosting-packages/local-feeds) or [other host](https://docs.microsoft.com/en-us/nuget/hosting-packages/overview) and consume the new package via Nuget as usual.
-
 <a name="getting-started"></a>
 ## Getting Started - default
 
