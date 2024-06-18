@@ -1,12 +1,8 @@
 package service.Models.Instance;
 
-import at.jku.isse.designspace.core.foundation.WorkspaceListener;
 import at.jku.isse.designspace.core.model.*;
-import at.jku.isse.designspace.core.operations.WorkspaceOperation;
-import at.jku.isse.designspace.sdk.Connect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import service.Models.General.ChangeTracker;
 import service.Models.General.ChangeTrackerManager;
 import service.SupportServices.Connector.ConnectService;
 

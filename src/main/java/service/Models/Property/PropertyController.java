@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.Models.DTOs.PropertyDTO;
+import service.Models.General.ChangeTrackerManager;
 import service.Models.Property.Requests.SetPropertyRequest;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.List;
 public class PropertyController {
 
     private final PropertyService propertyService;
+
+    private final ChangeTrackerManager changeTrackerManager = ChangeTrackerManager.getInstance();
 
     @Autowired
     public PropertyController(PropertyService propertyService) {
@@ -44,7 +47,7 @@ public class PropertyController {
     @PostMapping("/property/{id}/set")
     public ResponseEntity<Void> setProperty(@PathVariable Long id, @RequestBody SetPropertyRequest request) {
         try {
-            propertyService.setProperty(id, request.propertyId(), request.data());
+            propertyService.setProperty(id, request.propertyName(), request.data());
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
         }

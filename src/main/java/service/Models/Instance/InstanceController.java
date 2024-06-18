@@ -1,11 +1,15 @@
 package service.Models.Instance;
 
+import at.jku.isse.designspace.core.model.Element;
 import at.jku.isse.designspace.core.model.Instance;
+import at.jku.isse.designspace.core.model.InstanceType;
+import at.jku.isse.designspace.core.model.PropertyType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.Models.DTOs.InstanceDTO;
+import service.Models.DTOs.PropertyTypeDTO;
 import service.Models.General.ChangeTrackerManager;
 import service.Models.Instance.Requests.CreateInstanceRequest;
 import service.SupportServices.ExceptionHandler.CustomStatus;

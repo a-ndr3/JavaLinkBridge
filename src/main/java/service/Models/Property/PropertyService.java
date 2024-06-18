@@ -8,6 +8,8 @@ import service.SupportServices.Connector.ConnectService;
 
 import java.util.List;
 
+import static at.jku.isse.designspace.core.model.InstanceType.*;
+
 @Service
 public class PropertyService {
     private final ConnectService connectService;
@@ -25,25 +27,19 @@ public class PropertyService {
         return instance.getAccessedProperties().stream().toList();
     }
 
-    public void setProperty(Long instanceId, Long propertyId, Object value) {
-        var instance = connectService.getConnect().getToolWorkspace().getInstance(instanceId);
-
-        if (instance == null)
-            return;
-
-        setProperty(instance, propertyId, value);
-    }
-
-    private void setProperty(Instance inst, Long propertyId, Object value) {
-        var property = inst.getAccessedProperties().stream()
-                .filter(p -> p.getPropertyType().getId() == propertyId)
-                .findFirst()
-                .orElse(null);
-
-        if (property == null)
-            return;
-
-        setProperty(property, value);
+    private boolean setProperty(Instance instance, PropertyType pt, Object value) {
+        var type = pt.getReferencedInstanceType();
+        if (type == STRING)
+            return instance.set(pt, String.valueOf(value));
+        else if (type == BOOLEAN)
+            return instance.set(pt, Boolean.parseBoolean(value.toString()));
+        else if (type == INTEGER)
+            return instance.set(pt, Long.parseLong(value.toString()));
+        else if (type == REAL)
+            return instance.set(pt, Double.parseDouble(value.toString()));
+        else if (type == DATE)
+            return instance.set(pt, value);
+        return false;
     }
 
     private boolean setProperty(Property property, Object value) {
@@ -51,7 +47,7 @@ public class PropertyService {
     }
 
     public void setProperty(Long instanceId, String propertyName, Object value) {
-        var instance = connectService.getConnect().getToolWorkspace().getInstance(instanceId);
+        Instance instance = connectService.getConnect().getToolWorkspace().getInstance(instanceId);
 
         if (instance == null)
             return;
@@ -61,10 +57,20 @@ public class PropertyService {
                 .findFirst()
                 .orElse(null);
 
-        if (property == null)
-            return;
+        if (property == null) {
+            var propertyType = instance.getPropertyType(propertyName);
+            if (propertyType == null)
+                return;
 
-        setProperty(property, value);
+            if (!propertyType.isPrimitive()) {
+                var refInstance = connectService.getConnect().getToolWorkspace().getInstance(Long.parseLong(value.toString()));
+                instance.set(propertyType, refInstance);
+            } else {
+                setProperty(instance, propertyType, value);
+            }
+        } else {
+            setProperty(property, value);
+        }
     }
 }
 

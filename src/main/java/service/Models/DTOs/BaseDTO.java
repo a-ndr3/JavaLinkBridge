@@ -1,12 +1,12 @@
 package service.Models.DTOs;
 
+import at.jku.isse.designspace.core.model.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import service.Models.General.ChangeTrackerManager;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.*;
 
 import static org.apache.commons.lang3.reflect.FieldUtils.getAllFields;
 
@@ -26,7 +26,7 @@ import static org.apache.commons.lang3.reflect.FieldUtils.getAllFields;
 public class BaseDTO {
     private Long id;
     private Long oldId;
-
+    private Map<String, Object> properties = new HashMap<>();
     private String name;
 
     public Long getOldId() {
@@ -35,6 +35,14 @@ public class BaseDTO {
 
     public void setOldId(Long oldId) {
         this.oldId = oldId;
+    }
+
+    public Map<String, Object> getProperties() {
+        return properties;
+    }
+
+    public void addProperty(PropertyTypeDTO propertyType, Object value) {
+        properties.put(propertyType.getName(), value);
     }
 
     public BaseDTO(Long id) {
@@ -79,7 +87,52 @@ public class BaseDTO {
 
             if (targetField != null) {
                 targetField.setAccessible(true);
-                targetField.set(this, value);
+
+                if (propertyName.equals("properties")) {
+                    var valueCollection = (Collection<?>) value;
+                    var targetCollection = targetField.get(this);
+                    for (var item : valueCollection) {
+                        if (item instanceof SingleProperty<?>) {
+                            var singleProperty = (SingleProperty<?>) item;
+                            var name = singleProperty.getName();
+                            String val;
+                            if (singleProperty.get() instanceof Instance)
+                                val = ((Instance)singleProperty.get()).getName() + "_" + ((Instance)singleProperty.get()).getId();
+                            else
+                                val = singleProperty.get().toString();
+                            if (((HashMap) targetCollection).containsKey(name))
+                                ((HashMap) targetCollection).put(name, val);
+                        } else if (item instanceof ListProperty<?>) {
+                            var listProperty = (ListProperty<?>) item;
+                            for (var listItem : listProperty.get()) {
+                                var name = listProperty.getName();
+                                var val = listItem;
+                                if (((HashMap) targetCollection).containsKey(name))
+                                    ((HashMap) targetCollection).put(name, val);
+                            }
+                        } else if (item instanceof MapProperty<?>) {
+                            var mapProperty = (MapProperty<?>) item;
+                            var iterator = mapProperty.get().entrySet().iterator();
+                            while (iterator.hasNext()) {
+                                var entry = (MapProperty) iterator.next();
+                                var name = entry.getName();
+                                var val = entry.get().toString();
+                                if (((HashMap) targetCollection).containsKey(name))
+                                    ((HashMap) targetCollection).put(name, val);
+                            }
+                        } else if (item instanceof SetProperty<?>) {
+                            var setProperty = (SetProperty<?>) item;
+                            for (var listItem : setProperty.get()) {
+                                var name = setProperty.getName();
+                                var val = listItem.toString();
+                                if (((HashMap) targetCollection).containsKey(name))
+                                    ((HashMap) targetCollection).put(name, val);
+                            }
+                        }
+                    }
+                } else {
+                    targetField.set(this, value);
+                }
             } else {
 
             }

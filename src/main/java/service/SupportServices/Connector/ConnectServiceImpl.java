@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import service.Models.General.ChangeTrackerManager;
 import service.Settings;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ConnectServiceImpl implements ConnectService {
     private Connect connect;
@@ -126,20 +129,29 @@ public class ConnectServiceImpl implements ConnectService {
                 var element = connect.getToolWorkspace().getElement(operation.elementId);
                 var id = element.getId();
                 long generalId = 0;
-                if (tracker.compareExistingId(operation.elementId, id))
-                {
+                if (tracker.compareExistingId(operation.elementId, id)) {
                     tracker.trackField(operation.elementId, "id", id);
                     tracker.updateTrackingKey(operation.elementId, id);
                     generalId = id;
                 } else {
-                    generalId = operation.elementId;
+                    generalId = element.getId();
                 }
                 tracker.trackField(generalId, "name", element.getName());
                 tracker.trackField(generalId, "properties", element.getAccessedProperties());
                 tracker.trackField(generalId, "instanceType", element.getInstanceType());
                 tracker.trackField(generalId, "element", element);
-                tracker.trackField(generalId, "propertyTypes", element.getInstanceType().getPropertyTypes());
+                tracker.trackField(generalId, "propertyTypes", gatherAllPropertyTypes(element));
             });
         });
+    }
+
+    private List<PropertyType> gatherAllPropertyTypes(Element element) {
+        var instanceType = element.getInstanceType();
+        ArrayList<PropertyType> props = new ArrayList<>(instanceType.getPropertyTypes());
+        while (instanceType.getSuperType() != InstanceType.ROOT) {
+            instanceType = instanceType.getSuperType();
+            props.addAll(instanceType.getPropertyTypes());
+        }
+        return props;
     }
 }

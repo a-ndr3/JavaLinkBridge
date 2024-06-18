@@ -1,6 +1,8 @@
 package service.Models.General;
 
 import at.jku.isse.designspace.core.model.Instance;
+import at.jku.isse.designspace.core.model.InstanceType;
+import at.jku.isse.designspace.core.model.PropertyType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import service.Models.DTOs.BaseDTO;
@@ -140,6 +142,16 @@ public class ChangeTrackerManager {
         }
     }
 
+    private List<PropertyType> gatherAllPropertyTypes(InstanceType it) {
+        var instanceType = it;
+        ArrayList<PropertyType> props = new ArrayList<>(instanceType.getPropertyTypes());
+        while (instanceType.getSuperType() != InstanceType.ROOT) {
+            instanceType = instanceType.getSuperType();
+            props.addAll(instanceType.getPropertyTypes().stream().filter(p -> !p.getName().contains("@")).toList());
+        }
+        return props;
+    }
+
     public void addToTrackerAfterFetch(Instance instance) {
         if (!exists(instance.getId())) {
             trackAfterFetch(instance.getId(), instance);
@@ -148,13 +160,15 @@ public class ChangeTrackerManager {
     }
 
     private InstanceDTO createInstanceDTO(Instance instance) {
-        var propTypes = instance.getInstanceType().getPropertyTypes();
-        var dtos = new ArrayList<PropertyTypeDTO>();
-        for (var prop : propTypes) {
-            var dto = new PropertyTypeDTO(prop);
-            dtos.add(dto);
+        var inst = new InstanceDTO(instance.getId(), instance.getName());
+
+        if (inst != null) {
+            var allProps = gatherAllPropertyTypes(instance.getInstanceType());
+            for (var propertyType : allProps) {
+                inst.addProperty(new PropertyTypeDTO(propertyType), null);
+            }
         }
-        return new InstanceDTO(instance.getId(), instance.getName(), dtos);
+        return inst;
     }
 
     public void populateTrackers(Set<Instance> instances) {
