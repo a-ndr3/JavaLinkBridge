@@ -1,0 +1,329 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /api/property/{id}/set:
+    post:
+      tags:
+        - property-controller
+      operationId: setProperty
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPropertyRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+  /api/instanceType/create:
+    post:
+      tags:
+        - instance-type-controller
+      operationId: createInstanceType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInstanceTypeRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InstanceTypeDTO'
+  /api/instance/create:
+    post:
+      tags:
+        - instance-controller
+      operationId: createInstance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInstanceRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InstanceDTO'
+  /api/instance/DEBUG_BOB:
+    post:
+      tags:
+        - instance-controller
+      operationId: DEBUG_createInstanceAsBob
+      responses:
+        '200':
+          description: OK
+  /api/general/conclude:
+    post:
+      tags:
+        - general-controller
+      operationId: conclude
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/BaseDTO'
+                    - $ref: '#/components/schemas/ElementDTO'
+                    - $ref: '#/components/schemas/InstanceDTO'
+                    - $ref: '#/components/schemas/InstanceTypeDTO'
+                    - $ref: '#/components/schemas/PropertyDTO'
+                    - $ref: '#/components/schemas/PropertyTypeDTO'
+                    - $ref: '#/components/schemas/WorkspaceDTO'
+  /api/propertyType/getTypes/{instanceTypeId}:
+    get:
+      tags:
+        - property-type-controller
+      operationId: getPropertyTypes
+      parameters:
+        - name: instanceTypeId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyTypeDTO'
+  /api/property/getProperties/{instanceId}:
+    get:
+      tags:
+        - property-controller
+      operationId: getProperties
+      parameters:
+        - name: instanceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PropertyDTO'
+  /api/instanceType/getTypes:
+    get:
+      tags:
+        - instance-type-controller
+      operationId: getInstanceTypes
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstanceTypeDTO'
+  /api/instance/getInstances/{typeId}:
+    get:
+      tags:
+        - instance-controller
+      operationId: getInstances
+      parameters:
+        - name: typeId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstanceDTO'
+  /api/instance/get/{id}:
+    get:
+      tags:
+        - instance-controller
+      operationId: getInstance
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InstanceDTO'
+  /api/general/getInitialConnectUpdatesFromServer:
+    get:
+      tags:
+        - general-controller
+      operationId: getInitialConnectUpdatesFromServer
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/BaseDTO'
+                    - $ref: '#/components/schemas/ElementDTO'
+                    - $ref: '#/components/schemas/InstanceDTO'
+                    - $ref: '#/components/schemas/InstanceTypeDTO'
+                    - $ref: '#/components/schemas/PropertyDTO'
+                    - $ref: '#/components/schemas/PropertyTypeDTO'
+                    - $ref: '#/components/schemas/WorkspaceDTO'
+  /api/general/checkUpdates:
+    get:
+      tags:
+        - general-controller
+      operationId: checkUpdates
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/BaseDTO'
+                    - $ref: '#/components/schemas/ElementDTO'
+                    - $ref: '#/components/schemas/InstanceDTO'
+                    - $ref: '#/components/schemas/InstanceTypeDTO'
+                    - $ref: '#/components/schemas/PropertyDTO'
+                    - $ref: '#/components/schemas/PropertyTypeDTO'
+                    - $ref: '#/components/schemas/WorkspaceDTO'
+  /api/instanceType/delete/{id}:
+    delete:
+      tags:
+        - instance-type-controller
+      operationId: deleteInstanceType
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+  /api/instance/delete/{id}:
+    delete:
+      tags:
+        - instance-controller
+      operationId: deleteInstance
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    SetPropertyRequest:
+      type: object
+      properties:
+        propertyId:
+          type: integer
+          format: int64
+        data:
+          type: object
+    CreateInstanceTypeRequest:
+      type: object
+      properties:
+        parentInstanceId:
+          type: integer
+          format: int64
+        name:
+          type: string
+    InstanceTypeDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
+    CreateInstanceRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    InstanceDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
+    BaseDTO:
+      required:
+        - type
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        oldId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        type:
+          type: string
+      discriminator:
+        propertyName: type
+    ElementDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
+    PropertyDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
+    PropertyTypeDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'
+    WorkspaceDTO:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseDTO'

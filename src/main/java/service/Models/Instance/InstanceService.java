@@ -1,47 +1,72 @@
 package service.Models.Instance;
 
-import at.jku.isse.designspace.core.model.Instance;
+import at.jku.isse.designspace.core.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import service.Models.General.ChangeTrackerManager;
 import service.SupportServices.Connector.ConnectService;
-import service.SupportServices.StaticServices.StaticServices;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class InstanceService {
 
     private final ConnectService connectService;
 
+    private ChangeTrackerManager changeTrackerManager = ChangeTrackerManager.getInstance();
+
     @Autowired
     public InstanceService(ConnectService connectService) {
         this.connectService = connectService;
     }
 
-    public Instance createInstance(String name, String instanceTypeName) {
+    public Instance createInstance(Long id, String name) {
         var connect = connectService.getConnect();
 
-        var instanceType = connect.getToolWorkspace().getParentWorkspace().getInstanceTypes().stream()
-                .filter(it -> it.getName().equals(instanceTypeName))
-                .findFirst().orElse(null);
+        var instanceType = getInstanceType(id);
 
         if (instanceType == null)
             return null;
 
-        return Instance.create(connect.getToolWorkspace(), instanceType, name, connect.getFolder());
-    }
+        var instance = Instance.create(connect.getToolWorkspace(), instanceType, name, connect.getFolder());
 
-    public Instance updateInstance(Long id, String data) {
-        var instance = connectService.getConnect().getToolWorkspace().getParentWorkspace().getInstance(id);
+        changeTrackerManager.addToTracker(instance);
 
-        if (instance == null)
-            return null;
-
-        return StaticServices.instanceUpdater(instance, data);
+        return instance;
     }
 
     public void deleteInstance(Long id) {
-        var instance = connectService.getConnect().getToolWorkspace().getParentWorkspace().getInstance(id);
+        var instance = getInstance(id);
 
         if (instance != null)
             instance.delete();
+
+        changeTrackerManager.clearTracker(id);
+    }
+
+    public Instance getInstance(Long id) {
+        return connectService.getConnect().getToolWorkspace().getInstance(id);
+    }
+
+    public List<Instance> getInstances(Long instanceTypeId) {
+        var connect = connectService.getConnect();
+
+        var instanceType = getInstanceType(instanceTypeId);
+
+        if (instanceType == null)
+            return new ArrayList<>();
+
+        return connect.getFolder().getInstances(connect.getToolWorkspace()).stream().filter(
+                x -> x.getInstanceType().equals(instanceType)).toList();
+    }
+
+    public Set<Instance> getInstances() {
+        return connectService.getConnect().getFolder().getInstances(connectService.getConnect().getToolWorkspace());
+    }
+
+    public InstanceType getInstanceType(Long id) {
+        return connectService.getConnect().getLanguageWorkspace().getInstanceType(id);
     }
 }
