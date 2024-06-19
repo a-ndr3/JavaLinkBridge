@@ -46,7 +46,7 @@ namespace ConsoleApp1
             string option = Console.ReadLine();
 
             if (option == "1")
-            { 
+            {
                 var updateManager = UpdateManager.Instance;
 
                 updateManager.getInitialServerUpdates();
@@ -67,8 +67,8 @@ namespace ConsoleApp1
                     {
                         Console.Clear();
                         var inst = Instance.create(studentType, "student_" + Guid.NewGuid().ToString());
-                        updateManager.instances.Add(inst.Id.Value,inst);
-                        Console.WriteLine("Instance created");
+                        updateManager.instances.Add(inst.Id.Value, inst);
+
 
                     }
                     else if (optionConnected == "2")
@@ -109,11 +109,12 @@ namespace ConsoleApp1
                         var instanceProperties = Property.getProperties(instance.Value);
 
                         instanceProperties.ForEach(x => Console.WriteLine($"Name:{x.Name}   Value:{x.Id}"));
-
-                        Console.WriteLine("Property name:");
-                        var property = instanceProperties.Where(x => x.Name == Console.ReadLine()).First();
-                        Console.WriteLine("Property value:");
-                        Property.set(property, instance.Value, Console.ReadLine());
+                        //todo
+                        
+                        //Console.WriteLine("Property name:"); 
+                        //var property = instanceProperties.Where(x => x.Name == Console.ReadLine()).First();
+                        //Console.WriteLine("Property value:");
+                        //Property.set(property, instance.Value, Console.ReadLine());
                     }
                     else if (optionConnected == "6")
                     {
@@ -154,12 +155,12 @@ namespace ConsoleApp1
                         Console.WriteLine("Performance test with 20 000 instances, each 1000 = conclude: ");
 
                         benchmarkTests.PerformanceTest();
-                        
+
                         Console.WriteLine("Test finished. Results are saved!");
                     }
                     else if (optionConnected == "thr")
                     {
-                       benchmarkTests.ThroughputTest(1000);
+                        benchmarkTests.ThroughputTest(1000);
                     }
                 }
             }
@@ -167,6 +168,14 @@ namespace ConsoleApp1
             {
                 Console.Clear();
                 return;
+            }
+        }
+        private static void printInstance(Instance instance)
+        {
+            Console.WriteLine($"Id:{instance.Id}   Name:{instance.Name}");
+            foreach (var prop in instance.Properties)
+            {
+
             }
         }
     }

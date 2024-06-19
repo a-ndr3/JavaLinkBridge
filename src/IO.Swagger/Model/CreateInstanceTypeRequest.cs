@@ -26,7 +26,7 @@ namespace IO.Swagger.Model
     /// CreateInstanceTypeRequest
     /// </summary>
     [DataContract]
-        public partial class CreateInstanceTypeRequest :  IEquatable<CreateInstanceTypeRequest>, IValidatableObject
+    public partial class CreateInstanceTypeRequest : IEquatable<CreateInstanceTypeRequest>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInstanceTypeRequest" /> class.
@@ -38,17 +38,17 @@ namespace IO.Swagger.Model
             this.ParentInstanceId = parentInstanceId;
             this.Name = name;
         }
-        
+
         /// <summary>
         /// Gets or Sets ParentInstanceId
         /// </summary>
-        [DataMember(Name="parentInstanceId", EmitDefaultValue=false)]
+        [DataMember(Name = "parentInstanceId", EmitDefaultValue = false)]
         public long? ParentInstanceId { get; set; }
 
         /// <summary>
         /// Gets or Sets Name
         /// </summary>
-        [DataMember(Name="name", EmitDefaultValue=false)]
+        [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace IO.Swagger.Model
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
@@ -94,12 +94,12 @@ namespace IO.Swagger.Model
             if (input == null)
                 return false;
 
-            return 
+            return
                 (
                     this.ParentInstanceId == input.ParentInstanceId ||
                     (this.ParentInstanceId != null &&
                     this.ParentInstanceId.Equals(input.ParentInstanceId))
-                ) && 
+                ) &&
                 (
                     this.Name == input.Name ||
                     (this.Name != null &&

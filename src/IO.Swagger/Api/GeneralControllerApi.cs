@@ -19,7 +19,7 @@ namespace IO.Swagger.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public interface IGeneralControllerApi : IApiAccessor
+    public interface IGeneralControllerApi : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
@@ -30,7 +30,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Object&gt;</returns>
-        List<Object> CheckUpdates ();
+        List<Object> CheckUpdates();
 
         /// <summary>
         /// 
@@ -40,7 +40,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Object&gt;</returns>
-        ApiResponse<List<Object>> CheckUpdatesWithHttpInfo ();
+        ApiResponse<List<Object>> CheckUpdatesWithHttpInfo();
         /// <summary>
         /// 
         /// </summary>
@@ -49,7 +49,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Object&gt;</returns>
-        List<Object> Conclude ();
+        List<Object> Conclude();
 
         /// <summary>
         /// 
@@ -59,7 +59,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Object&gt;</returns>
-        ApiResponse<List<Object>> ConcludeWithHttpInfo ();
+        ApiResponse<List<Object>> ConcludeWithHttpInfo();
         /// <summary>
         /// 
         /// </summary>
@@ -68,7 +68,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Object&gt;</returns>
-        List<Object> GetInitialConnectUpdatesFromServer ();
+        List<Object> GetInitialConnectUpdatesFromServer();
 
         /// <summary>
         /// 
@@ -78,7 +78,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Object&gt;</returns>
-        ApiResponse<List<Object>> GetInitialConnectUpdatesFromServerWithHttpInfo ();
+        ApiResponse<List<Object>> GetInitialConnectUpdatesFromServerWithHttpInfo();
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -89,7 +89,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Object&gt;</returns>
-        System.Threading.Tasks.Task<List<Object>> CheckUpdatesAsync ();
+        System.Threading.Tasks.Task<List<Object>> CheckUpdatesAsync();
 
         /// <summary>
         /// 
@@ -99,7 +99,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Object&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Object>>> CheckUpdatesAsyncWithHttpInfo ();
+        System.Threading.Tasks.Task<ApiResponse<List<Object>>> CheckUpdatesAsyncWithHttpInfo();
         /// <summary>
         /// 
         /// </summary>
@@ -108,7 +108,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Object&gt;</returns>
-        System.Threading.Tasks.Task<List<Object>> ConcludeAsync ();
+        System.Threading.Tasks.Task<List<Object>> ConcludeAsync();
 
         /// <summary>
         /// 
@@ -118,7 +118,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Object&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Object>>> ConcludeAsyncWithHttpInfo ();
+        System.Threading.Tasks.Task<ApiResponse<List<Object>>> ConcludeAsyncWithHttpInfo();
         /// <summary>
         /// 
         /// </summary>
@@ -127,7 +127,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Object&gt;</returns>
-        System.Threading.Tasks.Task<List<Object>> GetInitialConnectUpdatesFromServerAsync ();
+        System.Threading.Tasks.Task<List<Object>> GetInitialConnectUpdatesFromServerAsync();
 
         /// <summary>
         /// 
@@ -137,14 +137,14 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Object&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Object>>> GetInitialConnectUpdatesFromServerAsyncWithHttpInfo ();
+        System.Threading.Tasks.Task<ApiResponse<List<Object>>> GetInitialConnectUpdatesFromServerAsyncWithHttpInfo();
         #endregion Asynchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public partial class GeneralControllerApi : IGeneralControllerApi
+    public partial class GeneralControllerApi : IGeneralControllerApi
     {
         private IO.Swagger.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
@@ -209,7 +209,7 @@ namespace IO.Swagger.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public IO.Swagger.Client.Configuration Configuration {get; set;}
+        public IO.Swagger.Client.Configuration Configuration { get; set; }
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
@@ -254,10 +254,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Object&gt;</returns>
-        public List<Object> CheckUpdates ()
+        public List<Object> CheckUpdates()
         {
-             ApiResponse<List<Object>> localVarResponse = CheckUpdatesWithHttpInfo();
-             return localVarResponse.Data;
+            ApiResponse<List<Object>> localVarResponse = CheckUpdatesWithHttpInfo();
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Object&gt;</returns>
-        public ApiResponse< List<Object> > CheckUpdatesWithHttpInfo ()
+        public ApiResponse<List<Object>> CheckUpdatesWithHttpInfo()
         {
 
             var localVarPath = "/api/general/checkUpdates";
@@ -291,11 +291,11 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+            RestResponse localVarResponse = (RestResponse)this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -305,7 +305,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<List<Object>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<Object>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
+                (List<Object>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
         }
 
         /// <summary>
@@ -313,10 +313,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Object&gt;</returns>
-        public async System.Threading.Tasks.Task<List<Object>> CheckUpdatesAsync ()
+        public async System.Threading.Tasks.Task<List<Object>> CheckUpdatesAsync()
         {
-             ApiResponse<List<Object>> localVarResponse = await CheckUpdatesAsyncWithHttpInfo();
-             return localVarResponse.Data;
+            ApiResponse<List<Object>> localVarResponse = await CheckUpdatesAsyncWithHttpInfo();
+            return localVarResponse.Data;
 
         }
 
@@ -325,7 +325,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Object&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<Object>>> CheckUpdatesAsyncWithHttpInfo ()
+        public async System.Threading.Tasks.Task<ApiResponse<List<Object>>> CheckUpdatesAsyncWithHttpInfo()
         {
 
             var localVarPath = "/api/general/checkUpdates";
@@ -351,11 +351,11 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+            RestResponse localVarResponse = (RestResponse)await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -365,7 +365,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<List<Object>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<Object>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
+                (List<Object>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
         }
 
         /// <summary>
@@ -373,10 +373,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Object&gt;</returns>
-        public List<Object> Conclude ()
+        public List<Object> Conclude()
         {
-             ApiResponse<List<Object>> localVarResponse = ConcludeWithHttpInfo();
-             return localVarResponse.Data;
+            ApiResponse<List<Object>> localVarResponse = ConcludeWithHttpInfo();
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Object&gt;</returns>
-        public ApiResponse< List<Object> > ConcludeWithHttpInfo ()
+        public ApiResponse<List<Object>> ConcludeWithHttpInfo()
         {
 
             var localVarPath = "/api/general/conclude";
@@ -410,11 +410,11 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+            RestResponse localVarResponse = (RestResponse)this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.Post, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -424,7 +424,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<List<Object>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<Object>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
+                (List<Object>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
         }
 
         /// <summary>
@@ -432,10 +432,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Object&gt;</returns>
-        public async System.Threading.Tasks.Task<List<Object>> ConcludeAsync ()
+        public async System.Threading.Tasks.Task<List<Object>> ConcludeAsync()
         {
-             ApiResponse<List<Object>> localVarResponse = await ConcludeAsyncWithHttpInfo();
-             return localVarResponse.Data;
+            ApiResponse<List<Object>> localVarResponse = await ConcludeAsyncWithHttpInfo();
+            return localVarResponse.Data;
 
         }
 
@@ -444,7 +444,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Object&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<Object>>> ConcludeAsyncWithHttpInfo ()
+        public async System.Threading.Tasks.Task<ApiResponse<List<Object>>> ConcludeAsyncWithHttpInfo()
         {
 
             var localVarPath = "/api/general/conclude";
@@ -470,11 +470,11 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+            RestResponse localVarResponse = (RestResponse)await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.Post, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -484,7 +484,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<List<Object>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<Object>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
+                (List<Object>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
         }
 
         /// <summary>
@@ -492,10 +492,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;Object&gt;</returns>
-        public List<Object> GetInitialConnectUpdatesFromServer ()
+        public List<Object> GetInitialConnectUpdatesFromServer()
         {
-             ApiResponse<List<Object>> localVarResponse = GetInitialConnectUpdatesFromServerWithHttpInfo();
-             return localVarResponse.Data;
+            ApiResponse<List<Object>> localVarResponse = GetInitialConnectUpdatesFromServerWithHttpInfo();
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Object&gt;</returns>
-        public ApiResponse< List<Object> > GetInitialConnectUpdatesFromServerWithHttpInfo ()
+        public ApiResponse<List<Object>> GetInitialConnectUpdatesFromServerWithHttpInfo()
         {
 
             var localVarPath = "/api/general/getInitialConnectUpdatesFromServer";
@@ -529,11 +529,11 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+            RestResponse localVarResponse = (RestResponse)this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -543,7 +543,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<List<Object>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<Object>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
+                (List<Object>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
         }
 
         /// <summary>
@@ -551,10 +551,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;Object&gt;</returns>
-        public async System.Threading.Tasks.Task<List<Object>> GetInitialConnectUpdatesFromServerAsync ()
+        public async System.Threading.Tasks.Task<List<Object>> GetInitialConnectUpdatesFromServerAsync()
         {
-             ApiResponse<List<Object>> localVarResponse = await GetInitialConnectUpdatesFromServerAsyncWithHttpInfo();
-             return localVarResponse.Data;
+            ApiResponse<List<Object>> localVarResponse = await GetInitialConnectUpdatesFromServerAsyncWithHttpInfo();
+            return localVarResponse.Data;
 
         }
 
@@ -563,7 +563,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Object&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<Object>>> GetInitialConnectUpdatesFromServerAsyncWithHttpInfo ()
+        public async System.Threading.Tasks.Task<ApiResponse<List<Object>>> GetInitialConnectUpdatesFromServerAsyncWithHttpInfo()
         {
 
             var localVarPath = "/api/general/getInitialConnectUpdatesFromServer";
@@ -589,11 +589,11 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+            RestResponse localVarResponse = (RestResponse)await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -603,7 +603,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<List<Object>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<Object>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
+                (List<Object>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Object>)));
         }
 
     }

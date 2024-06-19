@@ -20,7 +20,7 @@ namespace IO.Swagger.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public interface IPropertyControllerApi : IApiAccessor
+    public interface IPropertyControllerApi : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
@@ -32,7 +32,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="instanceId"></param>
         /// <returns>List&lt;PropertyDTO&gt;</returns>
-        List<PropertyDTO> GetProperties (long? instanceId);
+        List<PropertyDTO> GetProperties(long? instanceId);
 
         /// <summary>
         /// 
@@ -43,7 +43,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="instanceId"></param>
         /// <returns>ApiResponse of List&lt;PropertyDTO&gt;</returns>
-        ApiResponse<List<PropertyDTO>> GetPropertiesWithHttpInfo (long? instanceId);
+        ApiResponse<List<PropertyDTO>> GetPropertiesWithHttpInfo(long? instanceId);
         /// <summary>
         /// 
         /// </summary>
@@ -54,7 +54,7 @@ namespace IO.Swagger.Api
         /// <param name="body"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        void SetProperty (SetPropertyRequest body, long? id);
+        void SetProperty(SetPropertyRequest body, long? id);
 
         /// <summary>
         /// 
@@ -66,7 +66,7 @@ namespace IO.Swagger.Api
         /// <param name="body"></param>
         /// <param name="id"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> SetPropertyWithHttpInfo (SetPropertyRequest body, long? id);
+        ApiResponse<Object> SetPropertyWithHttpInfo(SetPropertyRequest body, long? id);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -78,7 +78,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="instanceId"></param>
         /// <returns>Task of List&lt;PropertyDTO&gt;</returns>
-        System.Threading.Tasks.Task<List<PropertyDTO>> GetPropertiesAsync (long? instanceId);
+        System.Threading.Tasks.Task<List<PropertyDTO>> GetPropertiesAsync(long? instanceId);
 
         /// <summary>
         /// 
@@ -89,7 +89,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="instanceId"></param>
         /// <returns>Task of ApiResponse (List&lt;PropertyDTO&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<PropertyDTO>>> GetPropertiesAsyncWithHttpInfo (long? instanceId);
+        System.Threading.Tasks.Task<ApiResponse<List<PropertyDTO>>> GetPropertiesAsyncWithHttpInfo(long? instanceId);
         /// <summary>
         /// 
         /// </summary>
@@ -100,7 +100,7 @@ namespace IO.Swagger.Api
         /// <param name="body"></param>
         /// <param name="id"></param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task SetPropertyAsync (SetPropertyRequest body, long? id);
+        System.Threading.Tasks.Task SetPropertyAsync(SetPropertyRequest body, long? id);
 
         /// <summary>
         /// 
@@ -112,14 +112,14 @@ namespace IO.Swagger.Api
         /// <param name="body"></param>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> SetPropertyAsyncWithHttpInfo (SetPropertyRequest body, long? id);
+        System.Threading.Tasks.Task<ApiResponse<Object>> SetPropertyAsyncWithHttpInfo(SetPropertyRequest body, long? id);
         #endregion Asynchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public partial class PropertyControllerApi : IPropertyControllerApi
+    public partial class PropertyControllerApi : IPropertyControllerApi
     {
         private IO.Swagger.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
@@ -184,7 +184,7 @@ namespace IO.Swagger.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public IO.Swagger.Client.Configuration Configuration {get; set;}
+        public IO.Swagger.Client.Configuration Configuration { get; set; }
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
@@ -230,10 +230,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="instanceId"></param>
         /// <returns>List&lt;PropertyDTO&gt;</returns>
-        public List<PropertyDTO> GetProperties (long? instanceId)
+        public List<PropertyDTO> GetProperties(long? instanceId)
         {
-             ApiResponse<List<PropertyDTO>> localVarResponse = GetPropertiesWithHttpInfo(instanceId);
-             return localVarResponse.Data;
+            ApiResponse<List<PropertyDTO>> localVarResponse = GetPropertiesWithHttpInfo(instanceId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="instanceId"></param>
         /// <returns>ApiResponse of List&lt;PropertyDTO&gt;</returns>
-        public ApiResponse< List<PropertyDTO> > GetPropertiesWithHttpInfo (long? instanceId)
+        public ApiResponse<List<PropertyDTO>> GetPropertiesWithHttpInfo(long? instanceId)
         {
             // verify the required parameter 'instanceId' is set
             if (instanceId == null)
@@ -272,11 +272,11 @@ namespace IO.Swagger.Api
             if (instanceId != null) localVarPathParams.Add("instanceId", this.Configuration.ApiClient.ParameterToString(instanceId)); // path parameter
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+            RestResponse localVarResponse = (RestResponse)this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -286,7 +286,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<List<PropertyDTO>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<PropertyDTO>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<PropertyDTO>)));
+                (List<PropertyDTO>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<PropertyDTO>)));
         }
 
         /// <summary>
@@ -295,10 +295,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="instanceId"></param>
         /// <returns>Task of List&lt;PropertyDTO&gt;</returns>
-        public async System.Threading.Tasks.Task<List<PropertyDTO>> GetPropertiesAsync (long? instanceId)
+        public async System.Threading.Tasks.Task<List<PropertyDTO>> GetPropertiesAsync(long? instanceId)
         {
-             ApiResponse<List<PropertyDTO>> localVarResponse = await GetPropertiesAsyncWithHttpInfo(instanceId);
-             return localVarResponse.Data;
+            ApiResponse<List<PropertyDTO>> localVarResponse = await GetPropertiesAsyncWithHttpInfo(instanceId);
+            return localVarResponse.Data;
 
         }
 
@@ -308,7 +308,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="instanceId"></param>
         /// <returns>Task of ApiResponse (List&lt;PropertyDTO&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<PropertyDTO>>> GetPropertiesAsyncWithHttpInfo (long? instanceId)
+        public async System.Threading.Tasks.Task<ApiResponse<List<PropertyDTO>>> GetPropertiesAsyncWithHttpInfo(long? instanceId)
         {
             // verify the required parameter 'instanceId' is set
             if (instanceId == null)
@@ -338,11 +338,11 @@ namespace IO.Swagger.Api
             if (instanceId != null) localVarPathParams.Add("instanceId", this.Configuration.ApiClient.ParameterToString(instanceId)); // path parameter
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+            RestResponse localVarResponse = (RestResponse)await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -352,7 +352,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<List<PropertyDTO>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<PropertyDTO>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<PropertyDTO>)));
+                (List<PropertyDTO>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<PropertyDTO>)));
         }
 
         /// <summary>
@@ -362,9 +362,9 @@ namespace IO.Swagger.Api
         /// <param name="body"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public void SetProperty (SetPropertyRequest body, long? id)
+        public void SetProperty(SetPropertyRequest body, long? id)
         {
-             SetPropertyWithHttpInfo(body, id);
+            SetPropertyWithHttpInfo(body, id);
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace IO.Swagger.Api
         /// <param name="body"></param>
         /// <param name="id"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> SetPropertyWithHttpInfo (SetPropertyRequest body, long? id)
+        public ApiResponse<Object> SetPropertyWithHttpInfo(SetPropertyRequest body, long? id)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -415,11 +415,11 @@ namespace IO.Swagger.Api
             }
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+            RestResponse localVarResponse = (RestResponse)this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.Post, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -439,9 +439,9 @@ namespace IO.Swagger.Api
         /// <param name="body"></param>
         /// <param name="id"></param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task SetPropertyAsync (SetPropertyRequest body, long? id)
+        public async System.Threading.Tasks.Task SetPropertyAsync(SetPropertyRequest body, long? id)
         {
-             await SetPropertyAsyncWithHttpInfo(body, id);
+            await SetPropertyAsyncWithHttpInfo(body, id);
 
         }
 
@@ -452,7 +452,7 @@ namespace IO.Swagger.Api
         /// <param name="body"></param>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> SetPropertyAsyncWithHttpInfo (SetPropertyRequest body, long? id)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> SetPropertyAsyncWithHttpInfo(SetPropertyRequest body, long? id)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -493,11 +493,11 @@ namespace IO.Swagger.Api
             }
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+            RestResponse localVarResponse = (RestResponse)await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.Post, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {

@@ -26,15 +26,15 @@ namespace IO.Swagger.Model
     /// ElementDTO
     /// </summary>
     [DataContract]
-        public partial class ElementDTO : BaseDTO,  IEquatable<ElementDTO>, IValidatableObject
+    public partial class ElementDTO : BaseDTO, IEquatable<ElementDTO>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ElementDTO" /> class.
         /// </summary>
-        public ElementDTO(long? id = default(long?), long? oldId = default(long?), string name = default(string), string type = default(string)) : base(id, oldId, name, type)
+        public ElementDTO(long? id = default(long?), long? oldId = default(long?), Dictionary<string, Object> properties = default(Dictionary<string, Object>), string name = default(string), string type = default(string)) : base(type, id, oldId, properties, name)
         {
         }
-        
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -47,7 +47,7 @@ namespace IO.Swagger.Model
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>

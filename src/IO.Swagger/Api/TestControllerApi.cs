@@ -13,14 +13,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using RestSharp;
 using IO.Swagger.Client;
-using IO.Swagger.Model;
 
 namespace IO.Swagger.Api
 {
+    /*
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface IPropertyTypeControllerApi : IApiAccessor
+        public interface ITestControllerApi : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
@@ -30,9 +30,8 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="instanceTypeId"></param>
-        /// <returns>List&lt;PropertyTypeDTO&gt;</returns>
-        List<PropertyTypeDTO> GetPropertyTypes(long? instanceTypeId);
+        /// <returns></returns>
+        void DEBUGCreateInstanceAsBob ();
 
         /// <summary>
         /// 
@@ -41,9 +40,8 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="instanceTypeId"></param>
-        /// <returns>ApiResponse of List&lt;PropertyTypeDTO&gt;</returns>
-        ApiResponse<List<PropertyTypeDTO>> GetPropertyTypesWithHttpInfo(long? instanceTypeId);
+        /// <returns>ApiResponse of Object(void)</returns>
+        ApiResponse<Object> DEBUGCreateInstanceAsBobWithHttpInfo ();
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -53,9 +51,8 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="instanceTypeId"></param>
-        /// <returns>Task of List&lt;PropertyTypeDTO&gt;</returns>
-        System.Threading.Tasks.Task<List<PropertyTypeDTO>> GetPropertyTypesAsync(long? instanceTypeId);
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task DEBUGCreateInstanceAsBobAsync ();
 
         /// <summary>
         /// 
@@ -64,24 +61,23 @@ namespace IO.Swagger.Api
         /// 
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="instanceTypeId"></param>
-        /// <returns>Task of ApiResponse (List&lt;PropertyTypeDTO&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<PropertyTypeDTO>>> GetPropertyTypesAsyncWithHttpInfo(long? instanceTypeId);
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> DEBUGCreateInstanceAsBobAsyncWithHttpInfo ();
         #endregion Asynchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public partial class PropertyTypeControllerApi : IPropertyTypeControllerApi
+        public partial class TestControllerApi : ITestControllerApi
     {
         private IO.Swagger.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyTypeControllerApi"/> class.
+        /// Initializes a new instance of the <see cref="TestControllerApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public PropertyTypeControllerApi(String basePath)
+        public TestControllerApi(String basePath)
         {
             this.Configuration = new IO.Swagger.Client.Configuration { BasePath = basePath };
 
@@ -89,10 +85,10 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyTypeControllerApi"/> class
+        /// Initializes a new instance of the <see cref="TestControllerApi"/> class
         /// </summary>
         /// <returns></returns>
-        public PropertyTypeControllerApi()
+        public TestControllerApi()
         {
             this.Configuration = IO.Swagger.Client.Configuration.Default;
 
@@ -100,12 +96,12 @@ namespace IO.Swagger.Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyTypeControllerApi"/> class
+        /// Initializes a new instance of the <see cref="TestControllerApi"/> class
         /// using Configuration object
         /// </summary>
         /// <param name="configuration">An instance of Configuration</param>
         /// <returns></returns>
-        public PropertyTypeControllerApi(IO.Swagger.Client.Configuration configuration = null)
+        public TestControllerApi(IO.Swagger.Client.Configuration configuration = null)
         {
             if (configuration == null) // use the default one in Configuration
                 this.Configuration = IO.Swagger.Client.Configuration.Default;
@@ -138,7 +134,7 @@ namespace IO.Swagger.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public IO.Swagger.Client.Configuration Configuration { get; set; }
+        public IO.Swagger.Client.Configuration Configuration {get; set;}
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
@@ -182,27 +178,21 @@ namespace IO.Swagger.Api
         ///  
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="instanceTypeId"></param>
-        /// <returns>List&lt;PropertyTypeDTO&gt;</returns>
-        public List<PropertyTypeDTO> GetPropertyTypes(long? instanceTypeId)
+        /// <returns></returns>
+        public void DEBUGCreateInstanceAsBob ()
         {
-            ApiResponse<List<PropertyTypeDTO>> localVarResponse = GetPropertyTypesWithHttpInfo(instanceTypeId);
-            return localVarResponse.Data;
+             DEBUGCreateInstanceAsBobWithHttpInfo();
         }
 
         /// <summary>
         ///  
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="instanceTypeId"></param>
-        /// <returns>ApiResponse of List&lt;PropertyTypeDTO&gt;</returns>
-        public ApiResponse<List<PropertyTypeDTO>> GetPropertyTypesWithHttpInfo(long? instanceTypeId)
+        /// <returns>ApiResponse of Object(void)</returns>
+        public ApiResponse<Object> DEBUGCreateInstanceAsBobWithHttpInfo ()
         {
-            // verify the required parameter 'instanceTypeId' is set
-            if (instanceTypeId == null)
-                throw new ApiException(400, "Missing required parameter 'instanceTypeId' when calling PropertyTypeControllerApi->GetPropertyTypes");
 
-            var localVarPath = "/api/propertyType/getTypes/{instanceTypeId}";
+            var localVarPath = "/test/test/create_instance_as_bob";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -217,42 +207,38 @@ namespace IO.Swagger.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*"
             };
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (instanceTypeId != null) localVarPathParams.Add("instanceTypeId", this.Configuration.ApiClient.ParameterToString(instanceTypeId)); // path parameter
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse)this.Configuration.ApiClient.CallApi(localVarPath,
-                Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+            RestResponse localVarResponse = (RestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.Post, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int)localVarResponse.StatusCode;
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("GetPropertyTypes", localVarResponse);
+                Exception exception = ExceptionFactory("DEBUGCreateInstanceAsBob", localVarResponse);
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<PropertyTypeDTO>>(localVarStatusCode,
+            return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<PropertyTypeDTO>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<PropertyTypeDTO>)));
+                null);
         }
 
         /// <summary>
         ///  
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="instanceTypeId"></param>
-        /// <returns>Task of List&lt;PropertyTypeDTO&gt;</returns>
-        public async System.Threading.Tasks.Task<List<PropertyTypeDTO>> GetPropertyTypesAsync(long? instanceTypeId)
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task DEBUGCreateInstanceAsBobAsync ()
         {
-            ApiResponse<List<PropertyTypeDTO>> localVarResponse = await GetPropertyTypesAsyncWithHttpInfo(instanceTypeId);
-            return localVarResponse.Data;
+             await DEBUGCreateInstanceAsBobAsyncWithHttpInfo();
 
         }
 
@@ -260,15 +246,11 @@ namespace IO.Swagger.Api
         ///  
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="instanceTypeId"></param>
-        /// <returns>Task of ApiResponse (List&lt;PropertyTypeDTO&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<PropertyTypeDTO>>> GetPropertyTypesAsyncWithHttpInfo(long? instanceTypeId)
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> DEBUGCreateInstanceAsBobAsyncWithHttpInfo ()
         {
-            // verify the required parameter 'instanceTypeId' is set
-            if (instanceTypeId == null)
-                throw new ApiException(400, "Missing required parameter 'instanceTypeId' when calling PropertyTypeControllerApi->GetPropertyTypes");
 
-            var localVarPath = "/api/propertyType/getTypes/{instanceTypeId}";
+            var localVarPath = "/test/test/create_instance_as_bob";
             var localVarPathParams = new Dictionary<String, String>();
             var localVarQueryParams = new List<KeyValuePair<String, String>>();
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
@@ -283,31 +265,29 @@ namespace IO.Swagger.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
-                "*/*"
             };
             String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (instanceTypeId != null) localVarPathParams.Add("instanceTypeId", this.Configuration.ApiClient.ParameterToString(instanceTypeId)); // path parameter
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse)await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+            RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.Post, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int)localVarResponse.StatusCode;
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("GetPropertyTypes", localVarResponse);
+                Exception exception = ExceptionFactory("DEBUGCreateInstanceAsBob", localVarResponse);
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<PropertyTypeDTO>>(localVarStatusCode,
+            return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<PropertyTypeDTO>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<PropertyTypeDTO>)));
+                null);
         }
 
-    }
+    }*/
 }

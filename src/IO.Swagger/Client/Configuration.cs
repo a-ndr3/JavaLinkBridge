@@ -119,7 +119,7 @@ namespace IO.Swagger.Client
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
 
-            Timeout = 20000;
+            Timeout = 100000;
         }
 
         /// <summary>
@@ -225,10 +225,12 @@ namespace IO.Swagger.Client
         /// <summary>
         /// Gets or sets the base path for API access.
         /// </summary>
-        public virtual string BasePath {
+        public virtual string BasePath
+        {
             get { return _basePath; }
-            set {
-                _basePath = value;              
+            set
+            {
+                _basePath = value;
             }
         }
 
@@ -237,19 +239,19 @@ namespace IO.Swagger.Client
         /// </summary>
         public virtual IDictionary<string, string> DefaultHeader { get; set; }
 
-        private int _timeout = 30000;
+        private int _timeout = 100000;
         /// <summary>
-        /// Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 30000 milliseconds.
+        /// Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 100000 milliseconds.
         /// </summary>
         public virtual int Timeout
         {
-            
+
             get
             {
                 if (_apiClient == null)
                 {
                     return _timeout;
-                } 
+                }
                 else
                 {
                     return ApiClient.RestClient.Options.MaxTimeout;
@@ -257,7 +259,7 @@ namespace IO.Swagger.Client
             }
             set
             {
-                _timeout = value;              
+                _timeout = value;
             }
         }
 
@@ -287,9 +289,9 @@ namespace IO.Swagger.Client
         public string GetApiKeyWithPrefix(string apiKeyIdentifier)
         {
             var apiKeyValue = "";
-            ApiKey.TryGetValue (apiKeyIdentifier, out apiKeyValue);
+            ApiKey.TryGetValue(apiKeyIdentifier, out apiKeyValue);
             var apiKeyPrefix = "";
-            if (ApiKeyPrefix.TryGetValue (apiKeyIdentifier, out apiKeyPrefix))
+            if (ApiKeyPrefix.TryGetValue(apiKeyIdentifier, out apiKeyPrefix))
                 return apiKeyPrefix + " " + apiKeyValue;
             else
                 return apiKeyValue;
@@ -428,7 +430,7 @@ namespace IO.Swagger.Client
         {
             String report = "C# SDK (IO.Swagger) Debug Report:\n";
             report += "    OS: " + System.Environment.OSVersion + "\n";
-            report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
+            report += "    .NET Framework Version: " + System.Environment.Version + "\n";
             report += "    Version of the API: v0\n";
             report += "    SDK Package Version: 1.0.0\n";
 

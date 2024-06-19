@@ -26,20 +26,15 @@ namespace IO.Swagger.Model
     /// InstanceDTO
     /// </summary>
     [DataContract]
-        public partial class InstanceDTO : BaseDTO,  IEquatable<InstanceDTO>, IValidatableObject
+    public partial class InstanceDTO : BaseDTO, IEquatable<InstanceDTO>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InstanceDTO" /> class.
         /// </summary>
-        public InstanceDTO(long? id = default(long?), long? oldId = default(long?), string name = default(string), string type = default(string)) : base(id, oldId, name, type)
+        public InstanceDTO(long? id = default(long?), long? oldId = default(long?), Dictionary<string, Object> properties = default(Dictionary<string, Object>), string name = default(string), string type = default(string)) : base(type, id, oldId, properties, name)
         {
         }
 
-        public InstanceDTO()
-        {
-
-        }
-        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -52,7 +47,7 @@ namespace IO.Swagger.Model
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>

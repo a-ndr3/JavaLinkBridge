@@ -14,8 +14,11 @@ namespace IO.Swagger.SharpModel
         public long? Id { get; set; }
 
         public string Name { get; set; }
-
+        
         public string Type { get; set; }
+
+        public Dictionary<string, object> Properties { get; set; }
+
         private Instance()
         {
 
@@ -39,9 +42,9 @@ namespace IO.Swagger.SharpModel
             return ConvertFromDTO(instanceControllerApi.CreateInstance(request));
         }
 
-        public static Instance create(long id, string name, string type)
+        public static Instance create(long id, string name, Dictionary<string, object> props, string type)
         {
-            return ConvertFromDTO(new InstanceDTO(id, null, type, name));
+            return ConvertFromDTO(new InstanceDTO(id, null, props, name, type));
         }
 
         public static List<Instance> getInstances(InstanceType instanceType)
@@ -59,11 +62,18 @@ namespace IO.Swagger.SharpModel
             return ConvertFromDTO(instanceControllerApi.GetInstance(id));
         }
 
-        public void delete()
+        public bool delete()
         {
             InstanceControllerApi instanceControllerApi = new InstanceControllerApi();
 
-            instanceControllerApi.DeleteInstance(Id);
+            var resp = instanceControllerApi.DeleteInstanceWithHttpInfo(Id);
+
+            if (resp.StatusCode == 200)
+            {
+                UpdateManager.Instance.instances.Remove(Id.Value);
+                return true;
+            }
+            else return false;
         }
 
         private static Instance ConvertFromDTO(InstanceDTO instanceDTO)
@@ -72,7 +82,8 @@ namespace IO.Swagger.SharpModel
             {
                 Id = instanceDTO.Id,
                 Name = instanceDTO.Name,
-                Type = instanceDTO.Type
+                Type = instanceDTO.Type,
+                Properties = instanceDTO.Properties
             };
         }
     }

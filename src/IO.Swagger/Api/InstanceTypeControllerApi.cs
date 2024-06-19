@@ -20,7 +20,7 @@ namespace IO.Swagger.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public interface IInstanceTypeControllerApi : IApiAccessor
+    public interface IInstanceTypeControllerApi : IApiAccessor
     {
         #region Synchronous Operations
         /// <summary>
@@ -32,7 +32,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>InstanceTypeDTO</returns>
-        InstanceTypeDTO CreateInstanceType (CreateInstanceTypeRequest body);
+        InstanceTypeDTO CreateInstanceType(CreateInstanceTypeRequest body);
 
         /// <summary>
         /// 
@@ -43,7 +43,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>ApiResponse of InstanceTypeDTO</returns>
-        ApiResponse<InstanceTypeDTO> CreateInstanceTypeWithHttpInfo (CreateInstanceTypeRequest body);
+        ApiResponse<InstanceTypeDTO> CreateInstanceTypeWithHttpInfo(CreateInstanceTypeRequest body);
         /// <summary>
         /// 
         /// </summary>
@@ -53,7 +53,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns></returns>
-        void DeleteInstanceType (long? id);
+        void DeleteInstanceType(long? id);
 
         /// <summary>
         /// 
@@ -64,7 +64,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> DeleteInstanceTypeWithHttpInfo (long? id);
+        ApiResponse<Object> DeleteInstanceTypeWithHttpInfo(long? id);
         /// <summary>
         /// 
         /// </summary>
@@ -73,7 +73,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;InstanceTypeDTO&gt;</returns>
-        List<InstanceTypeDTO> GetInstanceTypes ();
+        List<InstanceTypeDTO> GetInstanceTypes();
 
         /// <summary>
         /// 
@@ -83,7 +83,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;InstanceTypeDTO&gt;</returns>
-        ApiResponse<List<InstanceTypeDTO>> GetInstanceTypesWithHttpInfo ();
+        ApiResponse<List<InstanceTypeDTO>> GetInstanceTypesWithHttpInfo();
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -95,7 +95,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>Task of InstanceTypeDTO</returns>
-        System.Threading.Tasks.Task<InstanceTypeDTO> CreateInstanceTypeAsync (CreateInstanceTypeRequest body);
+        System.Threading.Tasks.Task<InstanceTypeDTO> CreateInstanceTypeAsync(CreateInstanceTypeRequest body);
 
         /// <summary>
         /// 
@@ -106,7 +106,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>Task of ApiResponse (InstanceTypeDTO)</returns>
-        System.Threading.Tasks.Task<ApiResponse<InstanceTypeDTO>> CreateInstanceTypeAsyncWithHttpInfo (CreateInstanceTypeRequest body);
+        System.Threading.Tasks.Task<ApiResponse<InstanceTypeDTO>> CreateInstanceTypeAsyncWithHttpInfo(CreateInstanceTypeRequest body);
         /// <summary>
         /// 
         /// </summary>
@@ -116,7 +116,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task DeleteInstanceTypeAsync (long? id);
+        System.Threading.Tasks.Task DeleteInstanceTypeAsync(long? id);
 
         /// <summary>
         /// 
@@ -127,7 +127,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteInstanceTypeAsyncWithHttpInfo (long? id);
+        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteInstanceTypeAsyncWithHttpInfo(long? id);
         /// <summary>
         /// 
         /// </summary>
@@ -136,7 +136,7 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;InstanceTypeDTO&gt;</returns>
-        System.Threading.Tasks.Task<List<InstanceTypeDTO>> GetInstanceTypesAsync ();
+        System.Threading.Tasks.Task<List<InstanceTypeDTO>> GetInstanceTypesAsync();
 
         /// <summary>
         /// 
@@ -146,14 +146,14 @@ namespace IO.Swagger.Api
         /// </remarks>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;InstanceTypeDTO&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<InstanceTypeDTO>>> GetInstanceTypesAsyncWithHttpInfo ();
+        System.Threading.Tasks.Task<ApiResponse<List<InstanceTypeDTO>>> GetInstanceTypesAsyncWithHttpInfo();
         #endregion Asynchronous Operations
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-        public partial class InstanceTypeControllerApi : IInstanceTypeControllerApi
+    public partial class InstanceTypeControllerApi : IInstanceTypeControllerApi
     {
         private IO.Swagger.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
 
@@ -218,7 +218,7 @@ namespace IO.Swagger.Api
         /// Gets or sets the configuration object
         /// </summary>
         /// <value>An instance of the Configuration</value>
-        public IO.Swagger.Client.Configuration Configuration {get; set;}
+        public IO.Swagger.Client.Configuration Configuration { get; set; }
 
         /// <summary>
         /// Provides a factory method hook for the creation of exceptions.
@@ -264,10 +264,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>InstanceTypeDTO</returns>
-        public InstanceTypeDTO CreateInstanceType (CreateInstanceTypeRequest body)
+        public InstanceTypeDTO CreateInstanceType(CreateInstanceTypeRequest body)
         {
-             ApiResponse<InstanceTypeDTO> localVarResponse = CreateInstanceTypeWithHttpInfo(body);
-             return localVarResponse.Data;
+            ApiResponse<InstanceTypeDTO> localVarResponse = CreateInstanceTypeWithHttpInfo(body);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>ApiResponse of InstanceTypeDTO</returns>
-        public ApiResponse< InstanceTypeDTO > CreateInstanceTypeWithHttpInfo (CreateInstanceTypeRequest body)
+        public ApiResponse<InstanceTypeDTO> CreateInstanceTypeWithHttpInfo(CreateInstanceTypeRequest body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -314,11 +314,11 @@ namespace IO.Swagger.Api
             }
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+            RestResponse localVarResponse = (RestResponse)this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.Post, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -328,7 +328,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<InstanceTypeDTO>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (InstanceTypeDTO) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(InstanceTypeDTO)));
+                (InstanceTypeDTO)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(InstanceTypeDTO)));
         }
 
         /// <summary>
@@ -337,10 +337,10 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>Task of InstanceTypeDTO</returns>
-        public async System.Threading.Tasks.Task<InstanceTypeDTO> CreateInstanceTypeAsync (CreateInstanceTypeRequest body)
+        public async System.Threading.Tasks.Task<InstanceTypeDTO> CreateInstanceTypeAsync(CreateInstanceTypeRequest body)
         {
-             ApiResponse<InstanceTypeDTO> localVarResponse = await CreateInstanceTypeAsyncWithHttpInfo(body);
-             return localVarResponse.Data;
+            ApiResponse<InstanceTypeDTO> localVarResponse = await CreateInstanceTypeAsyncWithHttpInfo(body);
+            return localVarResponse.Data;
 
         }
 
@@ -350,7 +350,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="body"></param>
         /// <returns>Task of ApiResponse (InstanceTypeDTO)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<InstanceTypeDTO>> CreateInstanceTypeAsyncWithHttpInfo (CreateInstanceTypeRequest body)
+        public async System.Threading.Tasks.Task<ApiResponse<InstanceTypeDTO>> CreateInstanceTypeAsyncWithHttpInfo(CreateInstanceTypeRequest body)
         {
             // verify the required parameter 'body' is set
             if (body == null)
@@ -388,11 +388,11 @@ namespace IO.Swagger.Api
             }
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+            RestResponse localVarResponse = (RestResponse)await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.Post, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -402,7 +402,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<InstanceTypeDTO>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (InstanceTypeDTO) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(InstanceTypeDTO)));
+                (InstanceTypeDTO)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(InstanceTypeDTO)));
         }
 
         /// <summary>
@@ -411,9 +411,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns></returns>
-        public void DeleteInstanceType (long? id)
+        public void DeleteInstanceType(long? id)
         {
-             DeleteInstanceTypeWithHttpInfo(id);
+            DeleteInstanceTypeWithHttpInfo(id);
         }
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> DeleteInstanceTypeWithHttpInfo (long? id)
+        public ApiResponse<Object> DeleteInstanceTypeWithHttpInfo(long? id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
@@ -451,11 +451,11 @@ namespace IO.Swagger.Api
             if (id != null) localVarPathParams.Add("id", this.Configuration.ApiClient.ParameterToString(id)); // path parameter
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+            RestResponse localVarResponse = (RestResponse)this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.Delete, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -474,9 +474,9 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task DeleteInstanceTypeAsync (long? id)
+        public async System.Threading.Tasks.Task DeleteInstanceTypeAsync(long? id)
         {
-             await DeleteInstanceTypeAsyncWithHttpInfo(id);
+            await DeleteInstanceTypeAsyncWithHttpInfo(id);
 
         }
 
@@ -486,7 +486,7 @@ namespace IO.Swagger.Api
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id"></param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteInstanceTypeAsyncWithHttpInfo (long? id)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteInstanceTypeAsyncWithHttpInfo(long? id)
         {
             // verify the required parameter 'id' is set
             if (id == null)
@@ -515,11 +515,11 @@ namespace IO.Swagger.Api
             if (id != null) localVarPathParams.Add("id", this.Configuration.ApiClient.ParameterToString(id)); // path parameter
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+            RestResponse localVarResponse = (RestResponse)await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.Delete, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -537,10 +537,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>List&lt;InstanceTypeDTO&gt;</returns>
-        public List<InstanceTypeDTO> GetInstanceTypes ()
+        public List<InstanceTypeDTO> GetInstanceTypes()
         {
-             ApiResponse<List<InstanceTypeDTO>> localVarResponse = GetInstanceTypesWithHttpInfo();
-             return localVarResponse.Data;
+            ApiResponse<List<InstanceTypeDTO>> localVarResponse = GetInstanceTypesWithHttpInfo();
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -548,7 +548,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;InstanceTypeDTO&gt;</returns>
-        public ApiResponse< List<InstanceTypeDTO> > GetInstanceTypesWithHttpInfo ()
+        public ApiResponse<List<InstanceTypeDTO>> GetInstanceTypesWithHttpInfo()
         {
 
             var localVarPath = "/api/instanceType/getTypes";
@@ -574,11 +574,11 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+            RestResponse localVarResponse = (RestResponse)this.Configuration.ApiClient.CallApi(localVarPath,
                 Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -588,7 +588,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<List<InstanceTypeDTO>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<InstanceTypeDTO>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<InstanceTypeDTO>)));
+                (List<InstanceTypeDTO>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<InstanceTypeDTO>)));
         }
 
         /// <summary>
@@ -596,10 +596,10 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of List&lt;InstanceTypeDTO&gt;</returns>
-        public async System.Threading.Tasks.Task<List<InstanceTypeDTO>> GetInstanceTypesAsync ()
+        public async System.Threading.Tasks.Task<List<InstanceTypeDTO>> GetInstanceTypesAsync()
         {
-             ApiResponse<List<InstanceTypeDTO>> localVarResponse = await GetInstanceTypesAsyncWithHttpInfo();
-             return localVarResponse.Data;
+            ApiResponse<List<InstanceTypeDTO>> localVarResponse = await GetInstanceTypesAsyncWithHttpInfo();
+            return localVarResponse.Data;
 
         }
 
@@ -608,7 +608,7 @@ namespace IO.Swagger.Api
         /// </summary>
         /// <exception cref="IO.Swagger.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;InstanceTypeDTO&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<InstanceTypeDTO>>> GetInstanceTypesAsyncWithHttpInfo ()
+        public async System.Threading.Tasks.Task<ApiResponse<List<InstanceTypeDTO>>> GetInstanceTypesAsyncWithHttpInfo()
         {
 
             var localVarPath = "/api/instanceType/getTypes";
@@ -634,11 +634,11 @@ namespace IO.Swagger.Api
 
 
             // make the HTTP request
-            RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+            RestResponse localVarResponse = (RestResponse)await this.Configuration.ApiClient.CallApiAsync(localVarPath,
                 Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
@@ -648,7 +648,7 @@ namespace IO.Swagger.Api
 
             return new ApiResponse<List<InstanceTypeDTO>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (List<InstanceTypeDTO>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<InstanceTypeDTO>)));
+                (List<InstanceTypeDTO>)this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<InstanceTypeDTO>)));
         }
 
     }

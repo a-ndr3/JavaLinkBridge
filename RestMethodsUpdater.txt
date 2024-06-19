@@ -1,6 +1,9 @@
-Method.GET to Method.Get
-Method.POST to Method.Post
-Method.PUT to Method.Put
-Method.DELETE to Method.Delete
-this.Configuration.ApiClient.RestClient.BaseUrl.ToString() to this.Configuration.ApiClient.RestClient.Options.BaseUrl.ToString()
-IRestResponse to RestResponse
+Method.GET *!* Method.Get
+Method.POST *!* Method.Post
+Method.PUT *!* Method.Put
+Method.DELETE *!* Method.Delete
+this.Configuration.ApiClient.RestClient.BaseUrl.ToString() *!* this.Configuration.ApiClient.RestClient.Options.BaseUrl.ToString()
+IRestResponse *!* RestResponse
+RestResponse *!* RestRequest
+request.AddFile(param.Value.Name, param.Value.Writer, param.Value.FileName, param.Value.ContentType); *!* //request.AddFile(param.Value.Name, param.Value.Writer, param.Value.FileName, param.Value.ContentType);
+IList<Parameter> headers *!* var headers

@@ -19,17 +19,17 @@ namespace IO.Swagger.SharpModel
 
         }
 
-        public static void set(Property property, Instance instance, Object value)
+        public static void set(string propertyName, Instance instance, Object value)
         {
             var controller = new PropertyControllerApi();
 
-            var request = new SetPropertyRequest(property.Id, value);
+            var request = new SetPropertyRequest(propertyName, value);
 
             var response = controller.SetPropertyWithHttpInfo(request, instance.Id);
 
             if (response.StatusCode == 200)
             {
-                instance.Name = value.ToString();
+                
             }
         }
 

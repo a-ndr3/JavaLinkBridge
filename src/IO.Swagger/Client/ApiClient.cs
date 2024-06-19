@@ -36,7 +36,7 @@ namespace IO.Swagger.Client
         /// Allows for extending request processing for <see cref="ApiClient"/> generated code.
         /// </summary>
         /// <param name="request">The RestSharp request object</param>
-        partial void InterceptRequest(RestResponse request);
+        partial void InterceptRequest(RestRequest request);
 
         /// <summary>
         /// Allows for extending response processing for <see cref="ApiClient"/> generated code.
@@ -167,7 +167,7 @@ namespace IO.Swagger.Client
                 path, method, queryParams, postBody, headerParams, formParams, fileParams,
                 pathParams, contentType);
 
-            var response = RestClient.Execute(request);     
+            var response = RestClient.Execute(request);
 
             return (Object)response;
         }
@@ -185,15 +185,15 @@ namespace IO.Swagger.Client
         /// <param name="contentType">Content type.</param>
         /// <returns>The Task instance.</returns>
         public async System.Threading.Tasks.Task<Object> CallApiAsync(
-            String path, RestSharp.Method method, List<KeyValuePair<String, String>> queryParams, Object postBody,
-            Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
-            Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
-            String contentType)
+           String path, RestSharp.Method method, List<KeyValuePair<String, String>> queryParams, Object postBody,
+           Dictionary<String, String> headerParams, Dictionary<String, String> formParams,
+           Dictionary<String, FileParameter> fileParams, Dictionary<String, String> pathParams,
+           String contentType)
         {
             var request = PrepareRequest(
                 path, method, queryParams, postBody, headerParams, formParams, fileParams,
                 pathParams, contentType);
-            
+
             var response = await RestClient.ExecuteAsync(request);
 
             return (Object)response;
@@ -272,7 +272,7 @@ namespace IO.Swagger.Client
         /// <returns>Object representation of the JSON string.</returns>
         public object Deserialize(RestResponse response, Type type)
         {
-            var headers = response.Headers;
+           var headers = response.Headers;
             if (type == typeof(byte[])) // return byte array
             {
                 return response.RawBytes;

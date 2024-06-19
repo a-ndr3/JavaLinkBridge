@@ -26,29 +26,29 @@ namespace IO.Swagger.Model
     /// SetPropertyRequest
     /// </summary>
     [DataContract]
-        public partial class SetPropertyRequest :  IEquatable<SetPropertyRequest>, IValidatableObject
+    public partial class SetPropertyRequest : IEquatable<SetPropertyRequest>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SetPropertyRequest" /> class.
         /// </summary>
-        /// <param name="propertyId">propertyId.</param>
+        /// <param name="propertyName">propertyName.</param>
         /// <param name="data">data.</param>
-        public SetPropertyRequest(long? propertyId = default(long?), Object data = default(Object))
+        public SetPropertyRequest(string propertyName = default(string), Object data = default(Object))
         {
-            this.PropertyId = propertyId;
+            this.PropertyName = propertyName;
             this.Data = data;
         }
-        
+
         /// <summary>
-        /// Gets or Sets PropertyId
+        /// Gets or Sets PropertyName
         /// </summary>
-        [DataMember(Name="propertyId", EmitDefaultValue=false)]
-        public long? PropertyId { get; set; }
+        [DataMember(Name = "propertyName", EmitDefaultValue = false)]
+        public string PropertyName { get; set; }
 
         /// <summary>
         /// Gets or Sets Data
         /// </summary>
-        [DataMember(Name="data", EmitDefaultValue=false)]
+        [DataMember(Name = "data", EmitDefaultValue = false)]
         public Object Data { get; set; }
 
         /// <summary>
@@ -59,12 +59,12 @@ namespace IO.Swagger.Model
         {
             var sb = new StringBuilder();
             sb.Append("class SetPropertyRequest {\n");
-            sb.Append("  PropertyId: ").Append(PropertyId).Append("\n");
+            sb.Append("  PropertyName: ").Append(PropertyName).Append("\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
@@ -94,12 +94,12 @@ namespace IO.Swagger.Model
             if (input == null)
                 return false;
 
-            return 
+            return
                 (
-                    this.PropertyId == input.PropertyId ||
-                    (this.PropertyId != null &&
-                    this.PropertyId.Equals(input.PropertyId))
-                ) && 
+                    this.PropertyName == input.PropertyName ||
+                    (this.PropertyName != null &&
+                    this.PropertyName.Equals(input.PropertyName))
+                ) &&
                 (
                     this.Data == input.Data ||
                     (this.Data != null &&
@@ -116,8 +116,8 @@ namespace IO.Swagger.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.PropertyId != null)
-                    hashCode = hashCode * 59 + this.PropertyId.GetHashCode();
+                if (this.PropertyName != null)
+                    hashCode = hashCode * 59 + this.PropertyName.GetHashCode();
                 if (this.Data != null)
                     hashCode = hashCode * 59 + this.Data.GetHashCode();
                 return hashCode;

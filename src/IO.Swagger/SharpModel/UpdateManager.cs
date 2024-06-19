@@ -148,7 +148,7 @@ namespace IO.Swagger.SharpModel
             {
                 if (dto.Id.HasValue)
                 {
-                    instance = SharpModel.Instance.create(dto.Id.Value, dto.Type, dto.Name);
+                    instance = SharpModel.Instance.create(dto.Id.Value, dto.Name, dto.Properties, dto.Type);
                 }
             }
             else
@@ -160,10 +160,24 @@ namespace IO.Swagger.SharpModel
                 }
             }
 
-            if (!string.IsNullOrEmpty(dto.Name))
-                instance.Name = dto.Name;
+            //if (!string.IsNullOrEmpty(dto.Name))
+            //    instance.Name = dto.Name;
+            //if (!string.IsNullOrEmpty(dto.Type))
+            //    instance.Type = dto.Type;
+            //if (dto.Properties != null)
+            //    instance.Properties = dto.Properties;
 
-            instances.Add(instance.Id.Value,instance);
+            //if (instances.ContainsKey(instance.Id.Value))
+            //    instances.Remove(instance.Id.Value);
+
+            //instances.Remove(instance.Id.Value);
+            //instances.Add(instance.Id.Value, instance);
+
+            instance.Name = dto.Name;
+            instance.Type = dto.Type;
+            instance.Properties = dto.Properties;
+
+            instances[instance.Id.Value] = instance;
 
             if (instance.Id < 0)
             {

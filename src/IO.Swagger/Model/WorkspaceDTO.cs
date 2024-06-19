@@ -26,15 +26,15 @@ namespace IO.Swagger.Model
     /// WorkspaceDTO
     /// </summary>
     [DataContract]
-        public partial class WorkspaceDTO : BaseDTO,  IEquatable<WorkspaceDTO>, IValidatableObject
+    public partial class WorkspaceDTO : BaseDTO, IEquatable<WorkspaceDTO>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkspaceDTO" /> class.
         /// </summary>
-        public WorkspaceDTO(long? id = default(long?), long? oldId = default(long?), string name = default(string), string type = default(string)) : base(id, oldId, name, type)
+        public WorkspaceDTO(long? id = default(long?), long? oldId = default(long?), Dictionary<string, Object> properties = default(Dictionary<string, Object>), string name = default(string), string type = default(string)) : base(type, id, oldId, properties, name)
         {
         }
-        
+
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -47,7 +47,7 @@ namespace IO.Swagger.Model
             sb.Append("}\n");
             return sb.ToString();
         }
-  
+
         /// <summary>
         /// Returns the JSON string presentation of the object
         /// </summary>
