@@ -1,0 +1,102 @@
+﻿<Window x:Class="JLBWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JLBWPF"
+        mc:Ignorable="d"
+        Title="JLBNET" Height="980" Width="800"
+        Background="#070610">
+
+    <Window.Resources>
+        <Style x:Key="DarkButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1A8D83"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="nunito"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#3E3E3E"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#5E5E5E"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontFamily" Value="nunito" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="nunito" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="#3E3E3E" Foreground="White">
+            <MenuItem Header="Clean Log" Click="CleanLog_Click">
+            </MenuItem>
+        </Menu>
+
+        <Grid DockPanel.Dock="Left" Width="300" Background="#070610" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="1" Margin="10">
+                <Button Content="Connect" Click="Connect_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                <Button Content="Disconnect" Click="Disconnect_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                <GroupBox Header="Create Instance" Margin="5" Padding="5">
+                    <StackPanel>
+                        <TextBox x:Name="CreateInstanceName" Width="220" Margin="5" Text="Instance Name" MouseDoubleClick="CreateInstanceName_MouseDoubleClick"/>
+                        <TextBox x:Name="InstanceName" Width="220" Margin="5" Text="Name" MouseDoubleClick="InstanceName_MouseDoubleClick"/>
+                        <Button Content="Create" Click="CreateInstance_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Delete Instance" Margin="5" Padding="5">
+                    <StackPanel>
+                        <TextBox x:Name="DeleteInstanceID" Width="220" Margin="5" Text="Instance ID" MouseDoubleClick="DeleteInstanceID_MouseDoubleClick"/>
+                        <Button Content="Delete" Click="DeleteInstance_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Set Property" Margin="5" Padding="5">
+                    <StackPanel>
+                        <TextBox x:Name="PropertyInstanceID" Width="220" Margin="5" Text="Instance ID" MouseDoubleClick="PropertyInstanceID_MouseDoubleClick"/>
+                        <TextBox x:Name="PropertyName" Width="220" Margin="5" Text="Property Name" MouseDoubleClick="PropertyName_MouseDoubleClick"/>
+                        <TextBox x:Name="PropertyValue" Width="220" Margin="5" Text="Property Value" MouseDoubleClick="PropertyValue_MouseDoubleClick"/>
+                        <Button Content="Set" Click="SetProperties_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                    </StackPanel>
+                </GroupBox>
+                <Button Content="Fetch changes" Click="FetchChanges_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                <Button Content="Conclude changes" Click="ConcludeChanges_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                <Button Content="LOCAL instances" Click="LocalButton_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                <Button Content="BRIDGE instances" Click="BridgeButton_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                <TextBlock Text="TESTS" FontWeight="Bold" Margin="10" HorizontalAlignment="Center" FontSize="16"/>
+                <Button Content="Performance test" Click="Performance_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                <Button Content="Response test" Click="Response_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+                <Button Content="Throughput test" Click="Throughput_Click" Width="150" Margin="5" Style="{StaticResource DarkButtonStyle}"/>
+            </StackPanel>
+        </Grid>
+
+        <TextBox x:Name="LogTextBox" DockPanel.Dock="Right" IsReadOnly="True" Background="#3E3E3E" VerticalScrollBarVisibility="Visible"
+                 Foreground="White" TextWrapping="Wrap" 
+                 Margin="10" Padding="10" FontSize="14" FontFamily="nunito" BorderBrush="#5E5E5E" BorderThickness="1" IsEnabled="True" Focusable="True" AllowDrop="True"/>
+    </DockPanel>
+</Window>
