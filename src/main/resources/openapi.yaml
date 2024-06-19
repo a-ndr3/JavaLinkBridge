@@ -6,6 +6,14 @@ servers:
   - url: http://localhost:8080
     description: Generated server url
 paths:
+  /test/test/create_instance_as_bob:
+    post:
+      tags:
+        - test-controller
+      operationId: DEBUG_createInstanceAsBob
+      responses:
+        '200':
+          description: OK
   /api/property/{id}/set:
     post:
       tags:
@@ -63,14 +71,6 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/InstanceDTO'
-  /api/instance/DEBUG_BOB:
-    post:
-      tags:
-        - instance-controller
-      operationId: DEBUG_createInstanceAsBob
-      responses:
-        '200':
-          description: OK
   /api/general/conclude:
     post:
       tags:
@@ -265,9 +265,8 @@ components:
     SetPropertyRequest:
       type: object
       properties:
-        propertyId:
-          type: integer
-          format: int64
+        propertyName:
+          type: string
         data:
           type: object
     CreateInstanceTypeRequest:
@@ -305,6 +304,10 @@ components:
         oldId:
           type: integer
           format: int64
+        properties:
+          type: object
+          additionalProperties:
+            type: object
         name:
           type: string
         type:

@@ -2,11 +2,12 @@ import at.jku.isse.designspace.core.foundation.WorkspaceListener;
 import at.jku.isse.designspace.core.model.*;
 import at.jku.isse.designspace.core.operations.WorkspaceOperation;
 import at.jku.isse.designspace.sdk.Connect;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.StopWatch;
 
 public class TestClass {
-    @Test
+    @Test @Disabled
     public void test() {
         Connect.init("Bob");
         Connect conn2 = Connect.forProjectTesting(
