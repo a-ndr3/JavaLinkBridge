@@ -53,4 +53,14 @@ public class PropertyController {
         }
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/property/{id}/add")
+    public ResponseEntity<Void> addProperty(@PathVariable Long id, @RequestBody SetPropertyRequest request) {
+        try {
+            propertyService.addProperty(id, request.propertyName(), request.data());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+        return ResponseEntity.ok().build();
+    }
 }

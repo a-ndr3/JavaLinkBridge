@@ -61,7 +61,7 @@ public class ConnectServiceImpl implements ConnectService {
             public void notifyWorkspaceOperation(Workspace workspace, WorkspaceOperation workspaceOperation) {
                 if (workspaceOperation instanceof InformWorkspaceChanges iwc) {
                     ((ToolWorkspace) workspace).acceptChanges(iwc.changesPayload);
-                    changeTrackerManager.populateTrackers(connect.getFolder().getInstances(connect.getToolWorkspace()));
+                    //changeTrackerManager.populateTrackers(connect.getFolder().getInstances(connect.getToolWorkspace()));
                 }
 
                 if (workspaceOperation instanceof WorkspaceChangeOperation wc) {

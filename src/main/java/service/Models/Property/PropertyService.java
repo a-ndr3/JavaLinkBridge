@@ -4,6 +4,7 @@ import at.jku.isse.designspace.core.model.Instance;
 import at.jku.isse.designspace.core.model.Property;
 import at.jku.isse.designspace.core.model.PropertyType;
 import org.springframework.stereotype.Service;
+import service.Models.General.ChangeTrackerManager;
 import service.SupportServices.Connector.ConnectService;
 
 import java.util.List;
@@ -70,6 +71,39 @@ public class PropertyService {
             }
         } else {
             setProperty(property, value);
+        }
+    }
+
+    public void addProperty(Long instanceId, String propertyName, Object value) {
+        Instance instance = connectService.getConnect().getToolWorkspace().getInstance(instanceId);
+
+        if (instance == null)
+            return; //todo return Errors when they happen in all null checks
+
+        var property = instance.getAccessedProperties().stream()
+                .filter(p -> p.getName().equals(propertyName))
+                .findFirst()
+                .orElse(null);
+
+        if (property == null) {
+            var propertyType = instance.getPropertyType(propertyName);
+            if (propertyType == null)
+                return;
+
+            if (!propertyType.isPrimitive()) {
+                var refInstance = connectService.getConnect().getToolWorkspace().getInstance(Long.parseLong(value.toString()));
+                instance.add(propertyType, refInstance);
+            } else {
+                instance.add(propertyType, value);
+            }
+        } else {
+            var propertyType = instance.getPropertyType(propertyName);
+            if (propertyType == null)
+                return;
+            if (!propertyType.isPrimitive()) {
+                var refInstance = connectService.getConnect().getToolWorkspace().getInstance(Long.parseLong(value.toString()));
+                instance.add(propertyType, refInstance);
+            }
         }
     }
 }

@@ -122,4 +122,28 @@ public class InstanceController {
             return ResponseEntity.ok((InstanceDTO) changeTrackerManager.getTrackedDTOs().get(instance.getId()));
         }
     }
+
+    @GetMapping("/instance/getAllInstances")
+    public ResponseEntity<List<InstanceDTO>> getAllInstances() {
+        var result = new ArrayList<InstanceDTO>();
+        try {
+            var instances = instanceService.getInstances();
+
+            if (instances == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+            for (var instance : instances) {
+                if (changeTrackerManager.exists(instance.getId())) {
+                    result.add((InstanceDTO) changeTrackerManager.getTrackedDTOs().get(instance.getId()));
+                } else {
+                    changeTrackerManager.addToTracker(instance);
+                    result.add((InstanceDTO) changeTrackerManager.getTrackedDTOs().get(instance.getId()));
+                }
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(CustomStatus.ErrorWhileGettingData.getStatusCode()).build();
+        }
+        return ResponseEntity.ok(result);
+    }
 }

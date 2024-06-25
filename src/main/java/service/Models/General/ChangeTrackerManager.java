@@ -165,7 +165,7 @@ public class ChangeTrackerManager {
         if (inst != null) {
             var allProps = gatherAllPropertyTypes(instance.getInstanceType());
             for (var propertyType : allProps) {
-                inst.addProperty(new PropertyTypeDTO(propertyType), null);
+                inst.addProperty(new PropertyTypeDTO(propertyType), instance.getProperty(propertyType).get());
             }
         }
         return inst;
