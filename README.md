@@ -1,4 +1,6 @@
-# About
+<p align="center">
+<img width="200" alt="java to NET33" src="https://github.com/a-ndr3/JavaLinkBridge/assets/66060105/7afedc69-04d3-42fe-a846-f9c45423133c">
+</p>
 
 ## The project's idea
 To build a prototype system designed to manage and propagate state changes across different applications, specifically from a Java backend to C#, we need to consider several approaches.
