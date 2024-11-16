@@ -97,7 +97,7 @@ public class BaseDTO {
                             var name = singleProperty.getName();
                             String val;
                             if (singleProperty.get() instanceof Instance)
-                                val = ((Instance)singleProperty.get()).getName() + "_" + ((Instance)singleProperty.get()).getId();
+                                val = ((Instance)singleProperty.get()).getName() + "(" + ((Instance)singleProperty.get()).getId() + ")";
                             else
                                 val = singleProperty.get().toString();
                             if (((HashMap) targetCollection).containsKey(name))

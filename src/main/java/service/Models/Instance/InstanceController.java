@@ -54,15 +54,15 @@ public class InstanceController {
         try {
             instanceService.deleteInstance(id);
         } catch (Exception e) {
-            return ResponseEntity.status(CustomStatus.ErrorWhileDeletingInstance.getStatusCode()).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
         var instance = instanceService.getInstance(id);
 
         if (instance.isDeleted())
-            return ResponseEntity.status(CustomStatus.Success.getStatusCode()).build();
+            return ResponseEntity.ok().build();
         else
-            return ResponseEntity.status(CustomStatus.ErrorWhileDeletingInstance.getStatusCode()).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     @GetMapping("/instance/getInstances/{typeId}")
